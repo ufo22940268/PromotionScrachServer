@@ -1,0 +1,27 @@
+.span3 {
+}
+
+img {
+    width : 190px;
+    height : 190px;
+    margin : auto;
+    display:inline;
+    position:relative;
+}
+
+.parent {
+    float:left;
+}
+
+.special {
+    position:relative;
+    bottom:100px;
+}
+
+.span4 {
+    background-color: #ff0000
+}
+
+.span8 {
+    background-color: #00ff00
+}

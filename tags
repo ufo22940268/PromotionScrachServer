@@ -1,0 +1,51 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AddFavorite	sample.html	/^function AddFavorite(sURL, sTitle)$/;"	f
+Bank	bank.py	/^class Bank():$/;"	c
+Bank	main.py	/^from bank import Bank$/;"	i
+COL_ACCEPTED	db.py	/^    COL_ACCEPTED = "accepted";$/;"	v	class:ShopTable
+COL_FETCH_TIME	db.py	/^    COL_FETCH_TIME = "fetch_time";$/;"	v	class:ShopTable
+COL_ID	db.py	/^    COL_ID = "_id";$/;"	v	class:ShopTable
+COL_NAME	db.py	/^    COL_NAME = "name";$/;"	v	class:ShopTable
+COL_TITLE	db.py	/^    COL_TITLE = "title";$/;"	v	class:ShopTable
+GetList	sample.html	/^    function GetList(curtype,curcity,cityname)    $/;"	f
+HideAllMenu	sample.html	/^    function HideAllMenu() $/;"	f
+HideMenu	sample.html	/^    function HideMenu(e, subMenuElementID)$/;"	f
+HideSubMenu	sample.html	/^    function HideSubMenu(e, handler)$/;"	f
+SelectMenu	sample.html	/^    function SelectMenu(index) {$/;"	f
+ShopTable	db.py	/^class ShopTable():$/;"	c
+TabChange	sample.html	/^    function TabChange(curtype)$/;"	f
+__init__	bank.py	/^    def __init__(self):$/;"	m	class:Bank
+__str__	bank.py	/^    def __str__(self):$/;"	m	class:Bank	file:
+clearBankTable	util.py	/^def clearBankTable():$/;"	f
+createDb	db.py	/^def createDb():$/;"	f
+db	main.py	/^import db$/;"	i
+failFun	sample.html	/^    function failFun() { }$/;"	f
+getConnection	db.py	/^def getConnection():$/;"	f
+gmtime	main.py	/^from time import gmtime, strftime$/;"	i
+hashlib	db.py	/^import hashlib$/;"	i
+hideCityList	sample.html	/^function hideCityList() {$/;"	f
+inflateBank	main.py	/^def inflateBank(jo):$/;"	f
+initTab	sample.html	/^function initTab()$/;"	f
+insertBank	db.py	/^def insertBank(bank):$/;"	f
+isMouseLeaveOrEnter	sample.html	/^    function isMouseLeaveOrEnter(e, handler)$/;"	f
+isMouseToSubMenu	sample.html	/^    function isMouseToSubMenu(e, subMenuElementID)$/;"	f
+json	main.py	/^import json$/;"	i
+main	main.py	/^def main():$/;"	f
+os	util.py	/^import os$/;"	i
+printBankTable	util.py	/^def printBankTable():$/;"	f
+re	main.py	/^import re$/;"	i
+setTabs	sample.html	/^function setTabs(curItem)$/;"	f
+showCityList	sample.html	/^    function showCityList(element) $/;"	f
+sqlite3	db.py	/^import sqlite3$/;"	i
+strftime	main.py	/^from time import gmtime, strftime$/;"	i
+successInfo	sample.html	/^  function successInfo() $/;"	f
+successTcInfo	sample.html	/^    function successTcInfo() $/;"	f
+temp	main.py	/^def temp():$/;"	f
+urllib	main.py	/^import urllib$/;"	i
+util	main.py	/^import util$/;"	i
+waitFun	sample.html	/^    function waitFun() { }$/;"	f
