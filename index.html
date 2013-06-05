@@ -8,10 +8,31 @@
         <link rel="stylesheet" href="assets/css/my.css" />
     </head>
 
-    <body>
+    <body onkeypress="onKeyPressed(event)">
         <div class="container">
-            <table class="table table-hover">
+            <div class="container-header">
+                <div class="row-fluid well well-large">
+                    <div class="span1 inline opt-label">
+                        是否处理:
+                    </div>
+                    <select id="opt-handle" name="" class="span2">
+                        <option value="">所有</option>
+                        <option value="">未处理</option>
+                        <option value="">待处理</option>
+                        <option value="">已处理</option>
+                    </select>
+                </div>
+                <div class="row-fluid">
+                    <div class="btn-group">
+                        <a id="opt-btn-accept" class="btn" href="javascript:;"><i class="icon-thumbs-up"></i></a>
+                        <a id="opt-btn-unaccept" class="btn" href="javascript:;"><i class="icon-thumbs-down"></i></a>
+                        <a id="opt-btn-skip" class="btn" href="javascript:;"><i class="icon-step-forward"></i></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover row-fluid">
                 <tr>
+                    <th></th>
                     <th>银行名称</th>
                     <th>ID</th>
                     <th>标题</th>
@@ -19,8 +40,9 @@
                     <th>更新时间</th>
                     <th>操作</th>
                 </tr>
-                {% for bank in banks %}
+                {% for i, bank in enumerate(banks) %}
                 <tr>
+                    <td><input type="checkbox" id="checkbox_{{ i }}" onclick="batchCheck(this)"/></td>
                     <td>{{ bank.name }}</td>
                     <td><a class="btn" href="{{ bank.url }}"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
                     <td>{{ bank.title }}</td>
@@ -40,6 +62,7 @@
                 {% end %}
             </table>
         </div>
+        <script src="assets/js/my.js"></script> 
         <script src="assets/js/jquery.magnific-popup.js" type="text/javascript"></script>
         <script src="assets/js/bootstrap.min.js"></script>
     </body>

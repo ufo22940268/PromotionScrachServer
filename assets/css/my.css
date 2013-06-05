@@ -1,2 +1,11 @@
 .container {
 }
+
+.opt-label {
+    margin-top:6px;
+    margin-right:3px;
+}
+
+.container-header {
+    padding-bottom:6px;
+}
