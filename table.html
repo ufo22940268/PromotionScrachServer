@@ -9,24 +9,17 @@
     </tr>
     {% for i, bank in enumerate(banks) %}
     <tr>
-        <td><input type="checkbox" id="checkbox_{{ i }}" onclick="batchCheck(this)"/></td>
+        <td><input class="row-selector" type="checkbox" id="checkbox_{{ i }}" onclick="checkItem(this)"/></td>
         <td>{{ bank.name }}</td>
         <td><a class="btn" href="{{ bank.url }}" target="_blank"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
         <td>{{ bank.title }}</td>
         <td>{{ bank.fetchTime }}</td>
         <td>
-            <label class="radio inline">
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                采用
-            </label>
-            <label class="radio inline">
-                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                弃用
-            </label>
-            <label class="radio inline">
-                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                跳过
-            </label>
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button type="button" class="btn btn-success">采用</button>
+                <button type="button" class="btn btn-success">弃用</button>
+                <button type="button" class="btn btn-success">跳过</button>
+            </div>
         </td>
     </tr>
     {% end %}

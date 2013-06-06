@@ -7,7 +7,9 @@ function checkRowInRange(from, to) {
     }
 }
 
-function batchCheck(cb) {
+function checkItem(cb) {
+    updateSelectionState();
+
     if (!isShiftPressed) {
         return;
     }
@@ -16,7 +18,7 @@ function batchCheck(cb) {
     var cur = parseInt(id.substring(id.indexOf("_") + 1));
     var INFI = 100000;
     var nearest = INFI;
-    $(":checkbox").each(function(index) {
+    $(".row-selector").each(function(index) {
         if ($(this).is(":checked")) {
             if (Math.abs(index - cur) < Math.abs(nearest - cur) && index != cur) {
                 nearest = index;
@@ -123,3 +125,13 @@ $(document).ready(function() {
 $('#reportrange span').html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
 });
+
+function updateSelectionState() {
+    if ($(".row-selector:checked").length == 0) {
+        $("#select-batch-ops").css("visibility", "hidden");
+    } else {
+        $("#select-batch-ops").css("visibility", "visible");
+    }
+}
+
+updateSelectionState();
