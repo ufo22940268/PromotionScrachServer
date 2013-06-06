@@ -4,12 +4,12 @@ import json
 import re
 from bank import Bank
 from time import gmtime, strftime
+from bs4 import BeautifulSoup
 import db
 import util
 
-def main():
-    #f = urllib.urlopen("http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=0411&type=specialsale");
-    f = open("cache.js");
+def fetchCmbBanks():
+    f = urllib.urlopen("http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=0411&type=specialsale");
     raw = f.readlines();
     strs = raw[:];
     if strs != None:
@@ -25,9 +25,26 @@ def main():
     for bJo in blJo:
         b = inflateBank(bJo);
         banks.append(b);
+    return banks;
 
-    for b in banks:
-        db.insertBank(b);    
+def fetchCiticBanks():
+    #f = urllib.urlopen("http://cards.ecitic.com/youhui/shuakahuodong.shtml");
+    f = open("citic.html");
+    soup = BeautifulSoup(f);
+    lis = soup.find_all("li", class_="emb4 item-n");
+    banks = [];
+    for li in lis:
+        b = Bank();
+        h2 = li.find_all("h2")[0];
+        b.title = h2.string.encode("utf-8");
+        b.name = "中信银行";
+        b.link = "http://cards.ecitic.com/youhui/" +li.find("a", class_="a-h")["href"];
+        banks.append(b);
+    return banks;
+
+
+def real(index):
+    return index*2;
 
 def inflateBank(jo):
     b = Bank();
@@ -48,5 +65,11 @@ def temp():
 
 if __name__ == '__main__':
     util.clearBankTable();
-    main()
+
+    banks = [];
+    banks = banks  + fetchCmbBanks();
+    banks = banks  + fetchCiticBanks();
+    for b in banks:
+        db.insertBank(b);    
+
     util.printBankTable();

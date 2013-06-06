@@ -26,8 +26,10 @@
                     </select>
 
                     银行:
-                    <select id="opt-bank" name="" class="opt-selector">
-                        <option value="">招商银行</option>
+                    <select id="opt-bank" name="" class="opt-selector" onchange="loadContent()">
+                        {% for bank in availableBanks %}
+                        <option value="{{ bank }}">{{ bank }}</option>
+                        {% end %}
                     </select>
 
                     <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">

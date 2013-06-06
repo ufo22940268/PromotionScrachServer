@@ -5,18 +5,22 @@ from tornado.template import Loader
 import sqlite3
 import db
 import random
+import sys
+
+def log(str):
+    sys.stderr.write(str + "\n")
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
 	loader = Loader("./");
-	bl = db.getBankList();
-	self.write(loader.load("index.html").generate(banks=bl));
+	bl = db.getAvailableBanks();
+	self.write(loader.load("index.html").generate(availableBanks=bl));
 
 class TableHandler(tornado.web.RequestHandler):
     def get(self):
 	loader = Loader("./");
-	bl = db.getBankList();
-        bl = bl[:int(len(bl)*random.random())]
+        bankName = self.get_argument("bank_name");
+	bl = db.getBankList(name = bankName);
 	self.write(loader.load("table.html").generate(banks=bl));
 
 application = tornado.web.Application([

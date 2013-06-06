@@ -61,11 +61,11 @@ $("#opt-btn-skip").hover(function(options) {
 
 function loadContent() {
     showLoading();
-    $.get("table.html", function(data) {
+    var bankName = $("#opt-bank option:selected").val();
+    $.get("table.html?bank_name=" + bankName, function(data) {
 	$("#table-container").html(data);
     });
 }
-
 loadContent();
 
 function sleep(milliseconds) {

@@ -1,3 +1,4 @@
+#coding=utf-8
 import sqlite3
 import hashlib
 from bank import Bank
@@ -42,10 +43,14 @@ def insertBank(bank):
     c.close();
     return True;
 
-def getBankList():
+def getBankList(name=None):
     conn = getConnection();
     c = conn.cursor();
-    c.execute("select * from " + BankTable.TABLE_NAME);
+    if name == None:
+        c.execute("select * from " + BankTable.TABLE_NAME);
+    else:
+        c.execute("select * from " + BankTable.TABLE_NAME + " where name = '" + name + "'");
+
     conn.commit();
 
     banks = [];
@@ -58,6 +63,9 @@ def getBankList():
 	bank.url = row[BankTable.COL_URL];
 	banks.append(bank);
     return banks;
+
+def getAvailableBanks():
+    return ["招商银行", "中信银行"];
 
 if __name__ == '__main__':
     createDb();
