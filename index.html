@@ -6,21 +6,35 @@
         <script src="assets/js/jquery.js"></script> 
         <link href="assets/css/bootstrap.css" rel="stylesheet"/>
         <link rel="stylesheet" href="assets/css/my.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/daterangepicker.css" />
+        <script type="text/javascript" src="assets/js/moment.js"></script>
+        <script type="text/javascript" src="assets/js/daterangepicker.js"></script>
     </head>
 
     <body onkeypress="onKeyPressed(event)">
+
         <div class="container">
+
             <div class="container-header">
-                <div class="row-fluid well well-large">
-                    <div class="span1 inline opt-label">
-                        是否处理:
-                    </div>
-                    <select id="opt-handle" name="" class="span2">
+                <div class="well well-large">
+                    是否处理:
+                    <select id="opt-handle" name="" class="opt-selector" style="margin-right:8px">
                         <option value="">所有</option>
                         <option value="">未处理</option>
                         <option value="">待处理</option>
                         <option value="">已处理</option>
                     </select>
+
+                    银行:
+                    <select id="opt-bank" name="" class="opt-selector">
+                        <option value="">招商银行</option>
+                    </select>
+
+                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                        <i class="icon-calendar icon-large"></i>
+                        <span></span> <b class="caret" style="margin-top: 8px"></b>
+                    </div>
+                    
                 </div>
                 <div class="row-fluid">
                     <div class="btn-group">
@@ -30,38 +44,12 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-hover row-fluid">
-                <tr>
-                    <th></th>
-                    <th>银行名称</th>
-                    <th>ID</th>
-                    <th>标题</th>
-                    <th>采集日期</th>
-                    <th>更新时间</th>
-                    <th>操作</th>
-                </tr>
-                {% for i, bank in enumerate(banks) %}
-                <tr>
-                    <td><input type="checkbox" id="checkbox_{{ i }}" onclick="batchCheck(this)"/></td>
-                    <td>{{ bank.name }}</td>
-                    <td><a class="btn" href="{{ bank.url }}"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
-                    <td>{{ bank.title }}</td>
-                    <td>{{ bank.fetchTime }}</td>
-                    <td></td>
-                    <td>
-                        <label class="radio inline">
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                            采用
-                        </label>
-                        <label class="radio inline">
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                            弃用
-                        </label>
-                    </td>
-                </tr>
-                {% end %}
-            </table>
+
+            <div id="table-container">
+            </div>
         </div>
+        <script src="assets/js/spin.js"></script>
+        <script src="assets/js/jquery.spin.js"></script>
         <script src="assets/js/my.js"></script> 
         <script src="assets/js/jquery.magnific-popup.js" type="text/javascript"></script>
         <script src="assets/js/bootstrap.min.js"></script>

@@ -4,6 +4,7 @@ from tornado.template import Template
 from tornado.template import Loader
 import sqlite3
 import db
+import random
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -11,33 +12,19 @@ class MainHandler(tornado.web.RequestHandler):
 	bl = db.getBankList();
 	self.write(loader.load("index.html").generate(banks=bl));
 
-class ContentHandler(tornado.web.RequestHandler):
-
-    class Entity:
-        pass
-
+class TableHandler(tornado.web.RequestHandler):
     def get(self):
-        loader = Loader("./");
-        self.write(loader.load("content.html").generate(**(self.build_values())));
-
-    def build_values(self):
-        conn = get_connection();
-        c = conn.cursor();
-        c.execute("SELECT title, url FROM blog");
-        rows = c.fetchall();
-        entities = [];
-        for row in rows:
-            entity = ContentHandler.Entity();
-            entity.content = row[0];
-            entity.url = row[1];
-            entities.append(entity);
-        return {"entities" : entities};
+	loader = Loader("./");
+	bl = db.getBankList();
+        bl = bl[:int(len(bl)*random.random())]
+	self.write(loader.load("table.html").generate(banks=bl));
 
 application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/assets/css/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/css/"}),
     (r"/assets/js/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/js/"}),
     (r"/assets/img/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/img/"}),
+    (r"/table.html", TableHandler),
     (r"/(.*)", tornado.web.StaticFileHandler, {"path": "./"}),
     ]);
 
