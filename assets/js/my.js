@@ -31,6 +31,10 @@ function checkItem(cb) {
     }
 }
 
+function checkRow(tr) {
+    console.log(tr.attr("data-id"));
+}
+
 $(document).keydown(function (e) {
     if (e.keyCode == 16) {
         isShiftPressed = true;
@@ -64,7 +68,8 @@ $("#opt-btn-skip").hover(function(options) {
 function loadContent() {
     showLoading();
     var bankName = $("#opt-bank option:selected").val();
-    $.get("table.html?bank_name=" + bankName, function(data) {
+    var state = $("#opt-handle option:selected").val();
+    $.get("table.html?bank_name=" + bankName + "&state=" + state, function(data) {
 	$("#table-container").html(data);
     });
 }
@@ -141,25 +146,28 @@ function updateSelectionState() {
 
 updateSelectionState();
 
-function acceptProm(item) {
+function saveSingleOperationOnProm(item, op) {
+    var id = getIdByCheckItem(item);
     startSpin(item);
-    $.get("check.py?id=6589&op=accept", function(data) {
+    $.get("check.py?id=" + id + "&op=" + op, function(data) {
         stopSpin(item);
     });
+}
+
+function getIdByCheckItem(item) {
+    return $(item).parent().attr("data-id");
+}
+
+function acceptProm(item) {
+    saveSingleOperationOnProm(item, "accept");
 }
 
 function unacceptProm(item) {
-    startSpin(item);
-    $.get("check.py?id=6589&op=unaccept", function(data) {
-        stopSpin(item);
-    });
+    saveSingleOperationOnProm(item, "unaccept");
 }
 
 function postponeProm(item) {
-    startSpin(item);
-    $.get("check.py?id=6589&op=postpone", function(data) {
-        stopSpin(item);
-    });
+    saveSingleOperationOnProm(item, "postpone");
 }
 
 function startSpin(item) {
@@ -174,4 +182,33 @@ function stopSpin(item) {
     if (spin.css("visibility") == "visible") {
         spin.css("visibility", "hidden");
     }
+}
+
+function saveMutibleItemStates(op) {
+    $("#opt-loading").css("visibility", "visible");
+    var ids = new Array();
+    $(".row-selector").each(function(index) {
+        if ($(this).is(":checked")) {
+            ids.push($(this).attr("data-id"));
+        }
+    });
+
+    var idStr = "";
+    for (var i = 0; i < ids.length; i ++) {
+        if (i == 0) {
+            idStr += "ids=";
+        }
+        idStr += ids[i];
+        if (i != ids.length - 1) {
+            idStr += ",";
+        }
+    }
+
+    var param = idStr;
+    param = param + "&op=" + op;
+
+    $.get("updateItemStates?" + param, function(data) {
+        $("#opt-loading").css("visibility", "hidden");
+        loadContent();
+    })
 }

@@ -2,6 +2,7 @@
 import sqlite3
 import hashlib
 from bank import Bank
+from util import log
 
 class BankTable():
     COL_ID = "_id";
@@ -13,9 +14,9 @@ class BankTable():
 
     TABLE_NAME = "bank";
 
-    FLAG_UNACCEPT = 0;
-    FLAG_ACCEPT = 1;
-    FLAG_POSTPONE = 2;
+    FLAG_UNACCEPTED = 0;
+    FLAG_ACCEPTED = 1;
+    FLAG_POSTPONED = 2;
 
 def getConnection():
     conn = sqlite3.connect("content.db");
@@ -47,13 +48,25 @@ def insertBank(bank):
     c.close();
     return True;
 
-def getBankList(name=None):
+def buildWhereClause(d):
+    if len(d) == 0:
+        return "";
+
+    where = "where ";
+    keys = list(d.viewkeys());
+    for i in range(len(keys)):
+        key = keys[i];
+        where = where + key + " = ? ";
+        if i != len(keys) - 1:
+            where += "and ";
+    return where;
+    
+
+def getBankList(whereDict):
     conn = getConnection();
     c = conn.cursor();
-    if name == None:
-        c.execute("select * from " + BankTable.TABLE_NAME);
-    else:
-        c.execute("select * from " + BankTable.TABLE_NAME + " where name = '" + name + "'");
+    where = buildWhereClause(whereDict);
+    c.execute("select * from " + BankTable.TABLE_NAME + " " + where, list(whereDict.viewvalues()));
 
     conn.commit();
 
@@ -65,6 +78,7 @@ def getBankList(name=None):
 	bank.fetchTime = row[BankTable.COL_FETCH_TIME];
 	bank.accepted = row[BankTable.COL_ACCEPTED];
 	bank.url = row[BankTable.COL_URL];
+        bank.id = row[BankTable.COL_ID];
 	banks.append(bank);
     return banks;
 
@@ -74,9 +88,20 @@ def getAvailableBanks():
 def checkProm(id, opFlag):
     conn = getConnection();
     c = conn.cursor();
-    c.execute("update " + BankTable.TABLE_NAME + " set " + BankTable.COL_ACCEPTED + " = ? where " + BankTable.COL_ID + " = ?", (opFlag, id,));
+    c.execute("update " + BankTable.TABLE_NAME + " set " + BankTable.COL_ACCEPTED + " = ? " +
+            " where " + BankTable.COL_ID + " = ?", (opFlag, id,));
     conn.commit();
     c.close();
+
+def updateItemStates(ids, acFlag):
+    conn = getConnection();
+    c = conn.cursor();
+    for id in ids:
+        c.execute("update " + BankTable.TABLE_NAME + " set " + BankTable.COL_ACCEPTED + " = ? " +
+                " where " + BankTable.COL_ID + " = ?", (acFlag, id,));
+    conn.commit();
+    c.close();
+
 
 if __name__ == '__main__':
     createDb();

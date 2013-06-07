@@ -17,15 +17,16 @@
             <div class="container-header">
                 <div class="well well-large">
                     是否处理:
-                    <select id="opt-handle" name="" class="opt-selector" style="margin-right:8px">
-                        <option value="">所有</option>
-                        <option value="">未处理</option>
-                        <option value="">待处理</option>
-                        <option value="">已处理</option>
+                    <select id="opt-handle" name="" class="opt-selector" style="margin-right:8px" onchange="loadContent()">
+                        <option value="all">所有</option>
+                        <option value="accepted">已采用</option>
+                        <option value="unaccepted">已弃用</option>
+                        <option value="postponed">已跳过</option>
                     </select>
 
                     银行:
                     <select id="opt-bank" name="" class="opt-selector" onchange="loadContent()">
+                        <!--<option value="all">所有</option>-->
                         {% for bank in availableBanks %}
                         <option value="{{ bank }}">{{ bank }}</option>
                         {% end %}
@@ -39,10 +40,11 @@
                 </div>
                 <div class="row-fluid">
                     <div id="select-batch-ops" class="btn-group" style="visibility:hidden">
-                        <a id="opt-btn-accept" class="btn" href="javascript:;"><i class="icon-thumbs-up"></i></a>
-                        <a id="opt-btn-unaccept" class="btn" href="javascript:;"><i class="icon-thumbs-down"></i></a>
-                        <a id="opt-btn-skip" class="btn" href="javascript:;"><i class="icon-step-forward"></i></a>
+                        <a id="opt-btn-accept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('accept')"><i class="icon-thumbs-up"></i></a>
+                        <a id="opt-btn-unaccept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('unaccept')"><i class="icon-thumbs-down"></i></a>
+                        <a id="opt-btn-skip" class="btn" href="javascript:;" onclick="saveMutibleItemStates('postpone')"><i class="icon-step-forward"></i></a>
                     </div>
+                    <img id="opt-loading" src="assets/img/tiny_loading.gif" style="margin-left:10px;visibility:hidden;"/>
                 </div>
             </div>
 

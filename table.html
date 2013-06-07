@@ -8,23 +8,20 @@
         <th>操作</th>
     </tr>
     {% for i, bank in enumerate(banks) %}
-    <tr>
-        <td><input class="row-selector" type="checkbox" id="checkbox_{{ i }}" onclick="checkItem(this)"/></td>
-        <td>{{ bank.name }}</td>
+    <tr data-id="{{ bank.id }}">
+        <td><input class="row-selector" type="checkbox" id="checkbox_{{ i }}" data-id="{{ bank.id }}" onclick="checkItem(this)"/></td>
+        <td onclick="checkRow($(this).parent())">{{ bank.name }}</td>
         <td><a class="btn" href="{{ bank.url }}" target="_blank"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
         <td>{{ bank.title }}</td>
         <td>{{ bank.fetchTime }}</td>
         <td>
-            <div class="btn-group" data-toggle="buttons-radio" style="float:left;">
+            <div class="btn-group" data-toggle="buttons-radio" style="float:left;" data-id="{{ bank.id }}">
                 <button type="button" class="btn btn-success {% if bank.accepted == 1 %} {{ 'active' }} {% end %}" onclick="acceptProm(this)" >采用</button>
                 <button type="button" class="btn btn-success {% if bank.accepted == 0 %} {{ 'active' }} {% end %}" onclick="unacceptProm(this)">弃用</button>
                 <button type="button" class="btn btn-success {% if bank.accepted == 2 %} {{ 'active' }} {% end %}" onclick="postponeProm(this)">跳过</button>
             </div>
-            <img src="http://www.qttc.net/static/images/loading.gif" alt="" style="margin-left:10px;visibility:hidden;"/>
+            <img src="assets/img/tiny_loading.gif" alt="" style="margin-left:10px;visibility:hidden;"/>
         </td>
     </tr>
     {% end %}
 </table>
-<!--<script type="text/javascript">-->
-    <!--$("#tiny-spinner").spin("tiny");-->
-<!--</script>-->
