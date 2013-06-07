@@ -16,18 +16,15 @@
         <td>{{ bank.fetchTime }}</td>
         <td>
             <div class="btn-group" data-toggle="buttons-radio" style="float:left;">
-                <button type="button" class="btn btn-success">采用</button>
-                <button type="button" class="btn btn-success">弃用</button>
-                <button type="button" class="btn btn-success">跳过</button>
+                <button type="button" class="btn btn-success {% if bank.accepted == 1 %} {{ 'active' }} {% end %}" onclick="acceptProm(this)" >采用</button>
+                <button type="button" class="btn btn-success {% if bank.accepted == 0 %} {{ 'active' }} {% end %}" onclick="unacceptProm(this)">弃用</button>
+                <button type="button" class="btn btn-success {% if bank.accepted == 2 %} {{ 'active' }} {% end %}" onclick="postponeProm(this)">跳过</button>
             </div>
-            {% if i == 0 %}
-            <span id="tiny-spinner" style="margin-top:18px;margin-left:10px;">
-            </span>
-            {% end %}
+            <img src="http://www.qttc.net/static/images/loading.gif" alt="" style="margin-left:10px;visibility:hidden;"/>
         </td>
     </tr>
     {% end %}
 </table>
-<script type="text/javascript">
-    $("#tiny-spinner").spin("tiny");
-</script>
+<!--<script type="text/javascript">-->
+    <!--$("#tiny-spinner").spin("tiny");-->
+<!--</script>-->

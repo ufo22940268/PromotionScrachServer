@@ -13,6 +13,10 @@ class BankTable():
 
     TABLE_NAME = "bank";
 
+    FLAG_UNACCEPT = 0;
+    FLAG_ACCEPT = 1;
+    FLAG_POSTPONE = 2;
+
 def getConnection():
     conn = sqlite3.connect("content.db");
     conn.row_factory = sqlite3.Row;
@@ -66,6 +70,13 @@ def getBankList(name=None):
 
 def getAvailableBanks():
     return ["招商银行", "中信银行"];
+
+def checkProm(id, opFlag):
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("update " + BankTable.TABLE_NAME + " set " + BankTable.COL_ACCEPTED + " = ? where " + BankTable.COL_ID + " = ?", (opFlag, id,));
+    conn.commit();
+    c.close();
 
 if __name__ == '__main__':
     createDb();

@@ -140,3 +140,38 @@ function updateSelectionState() {
 }
 
 updateSelectionState();
+
+function acceptProm(item) {
+    startSpin(item);
+    $.get("check.py?id=6589&op=accept", function(data) {
+        stopSpin(item);
+    });
+}
+
+function unacceptProm(item) {
+    startSpin(item);
+    $.get("check.py?id=6589&op=unaccept", function(data) {
+        stopSpin(item);
+    });
+}
+
+function postponeProm(item) {
+    startSpin(item);
+    $.get("check.py?id=6589&op=postpone", function(data) {
+        stopSpin(item);
+    });
+}
+
+function startSpin(item) {
+    var spin = $(item).parent().next();
+    if (spin.css("visibility") == "hidden") {
+        spin.css("visibility", "visible");
+    }
+}
+
+function stopSpin(item) {
+    var spin = $(item).parent().next();
+    if (spin.css("visibility") == "visible") {
+        spin.css("visibility", "hidden");
+    }
+}
