@@ -32,19 +32,24 @@
                         {% end %}
                     </select>
 
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                        <i class="icon-calendar icon-large"></i>
-                        <span></span> <b class="caret" style="margin-top: 8px"></b>
-                    </div>
+                     <div class="input-prepend pull-right">
+                       <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="reservation" id="daterange" />
+                     </div>
                     
                 </div>
                 <div class="row-fluid">
-                    <div id="select-batch-ops" class="btn-group" style="visibility:hidden">
-                        <a id="opt-btn-accept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('accept')"><i class="icon-thumbs-up"></i></a>
-                        <a id="opt-btn-unaccept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('unaccept')"><i class="icon-thumbs-down"></i></a>
-                        <a id="opt-btn-skip" class="btn" href="javascript:;" onclick="saveMutibleItemStates('postpone')"><i class="icon-step-forward"></i></a>
+                    <div class="span3">
+                        <button id="opt-btn-select-all" class="btn" href="javascript:;" style="position:inline" onclick="$('.row-selector').prop('checked', true);updateSelectionState();" >选择全部</button>
+                        <button id="opt-btn-unselect-all" class="btn" href="javascript:;" style="position:inline" onclick="$('.row-selector').prop('checked', false);updateSelectionState();">取消全部</button>
                     </div>
-                    <img id="opt-loading" src="assets/img/tiny_loading.gif" style="margin-left:10px;visibility:hidden;"/>
+                    <div class="span4">
+                        <div id="select-batch-ops" style="visibility:hidden">
+                            <a id="opt-btn-accept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('accept')">批量采用</a>
+                            <a id="opt-btn-unaccept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('unaccept')">批量弃用</a>
+                            <a id="opt-btn-skip" class="btn" href="javascript:;" onclick="saveMutibleItemStates('postpone')">批量废弃</a>
+                        </div>
+                        <img id="opt-loading" src="assets/img/tiny_loading.gif" style="margin-left:10px;visibility:hidden;"/>
+                    </div>
                 </div>
             </div>
 
