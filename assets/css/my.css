@@ -10,6 +10,14 @@
     padding-bottom:6px;
 }
 
-.spinner {
+#spinner {
     margin-top:100px;
+}
+
+#tiny-spinner {
+}
+
+.spinner {
+    /*left:-170px;*/
+    /*top:-18px;*/
 }

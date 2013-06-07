@@ -84,7 +84,12 @@ function showLoading() {
     $("#spinner").spin();
 }
 
+function showTinyLoading() {
+    $("#tiny-spinner").spin('tiny', 'teal');
+}
+
 showLoading();
+showTinyLoading();
 
 $(document).ready(function() {
     $('#reportrange').daterangepicker(

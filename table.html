@@ -15,7 +15,11 @@
         <td>{{ bank.title }}</td>
         <td>{{ bank.fetchTime }}</td>
         <td>
-            <div class="btn-group" data-toggle="buttons-radio">
+            {% if i == 0 %}
+            <span id="tiny-spinner" style="float:right;margin-top:18px">
+            </span>
+            {% end %}
+            <div class="btn-group" data-toggle="buttons-radio" style="">
                 <button type="button" class="btn btn-success">采用</button>
                 <button type="button" class="btn btn-success">弃用</button>
                 <button type="button" class="btn btn-success">跳过</button>
@@ -24,3 +28,6 @@
     </tr>
     {% end %}
 </table>
+<script type="text/javascript">
+    $("#tiny-spinner").spin("tiny");
+</script>

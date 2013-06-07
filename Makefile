@@ -1,8 +1,8 @@
-all:
-	python main.py
-
 server:
 	python server.py
+
+all:
+	python main.py
 
 save:
 	echo "success!"
