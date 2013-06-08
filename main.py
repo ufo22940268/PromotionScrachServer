@@ -3,7 +3,6 @@ import urllib
 import json
 import re
 from bank import Bank
-from time import gmtime, strftime
 from bs4 import BeautifulSoup
 import db
 import util
@@ -45,19 +44,6 @@ def fetchCiticBanks():
 
 def real(index):
     return index*2;
-
-def inflateBank(jo):
-    b = Bank();
-    url = jo["LinkUrl"].encode("utf-8");
-    if url.find("http:") == -1:
-	b.url = "http://cc.cmbchina.com" + url;
-    else:
-	b.url = url;
-
-    b.title = jo["Title"].encode("utf-8");
-    b.name = "招商银行";
-    b.fetchTime = strftime("%Y-%m-%d %H:%M:%S", gmtime());
-    return b;
 
 def temp():
     f = urllib.urlopen("http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=0411&type=specialsale");

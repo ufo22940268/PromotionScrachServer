@@ -38,6 +38,7 @@ Bank	db.py	/^from bank import Bank$/;"	i
 Bank	main.py	/^from bank import Bank$/;"	i
 BankTable	db.py	/^class BankTable():$/;"	c
 BankTable	server.py	/^from db import BankTable$/;"	i
+BaseGetter	scratch/base.py	/^class BaseGetter:$/;"	c
 BeautifulSoup	main.py	/^from bs4 import BeautifulSoup$/;"	i
 Button	assets/js/bootstrap-button.js	/^  Button.prototype.setState = function (state) {$/;"	c
 Button.Button	assets/js/bootstrap-button.js	/^  Button.prototype.toggle = function () {$/;"	c
@@ -58,6 +59,8 @@ Carousel.slide	assets/js/bootstrap-carousel.js	/^  , slide: function (type, next
 Carousel.slide.$.$.$.$.interval	assets/js/bootstrap-carousel.js	/^    interval: 5000$/;"	p
 Carousel.slide.$.$.$.$.pause	assets/js/bootstrap-carousel.js	/^  , pause: 'hover'$/;"	p
 CheckHandler	server.py	/^class CheckHandler(tornado.web.RequestHandler):$/;"	c
+CiticGetter	scratch/citic.py	/^class CiticGetter:$/;"	c
+CiticGetter	test.py	/^from scratch.citic import CiticGetter$/;"	i
 Collapse.Collapse	assets/js/bootstrap-collapse.js	/^  Collapse.prototype = {$/;"	c
 Collapse.Collapse.Collapse.constructor	assets/js/bootstrap-collapse.js	/^    constructor: Collapse$/;"	p
 Collapse.Collapse.Collapse.dimension	assets/js/bootstrap-collapse.js	/^  , dimension: function () {$/;"	m
@@ -210,6 +213,8 @@ e.fn.button	assets/js/bootstrap.min.js	/^!function(e){"use strict";e(function(){
 eName	assets/js/jquery.magnific-popup.js	/^		var eName = 'click.magnificPopup';$/;"	v
 fLogon	citic.html	/^		function fLogon(){$/;"	f
 failFun	sample.html	/^    function failFun() { }$/;"	f
+fetchBankList	scratch/base.py	/^    def fetchBankList(self):$/;"	m	class:BaseGetter
+fetchBankList	scratch/citic.py	/^    def fetchBankList(self):$/;"	m	class:CiticGetter
 fetchCiticBanks	main.py	/^def fetchCiticBanks():$/;"	f
 fetchCmbBanks	main.py	/^def fetchCmbBanks():$/;"	f
 fluid	assets/js/holder/holder.js	/^function fluid(el, holder, src) {$/;"	f
@@ -239,6 +244,7 @@ i	assets/js/html5shiv.js	/^(function(l,f){function m(){var a=e.elements;return"s
 inflateBank	main.py	/^def inflateBank(jo):$/;"	f
 initTab	sample.html	/^function initTab()$/;"	f
 insertBank	db.py	/^def insertBank(bank):$/;"	f
+insertBankInfo	scratch/base.py	/^    def insertBankInfo(self):$/;"	m	class:BaseGetter
 ioloop	server.py	/^import tornado.ioloop$/;"	i
 isMouseLeaveOrEnter	sample.html	/^    function isMouseLeaveOrEnter(e, handler)$/;"	f
 isMouseToSubMenu	sample.html	/^    function isMouseToSubMenu(e, subMenuElementID)$/;"	f
