@@ -65,11 +65,14 @@ $("#opt-btn-skip").hover(function(options) {
     });
 });
 
-function loadContent() {
+function loadContent(page) {
+    if (!page) {
+        page = 1;
+    }
     showLoading();
     var bankName = $("#opt-bank option:selected").val();
     var state = $("#opt-handle option:selected").val();
-    $.get("table.html?bank_name=" + bankName + "&state=" + state, function(data) {
+    $.get("table.html?bank_name=" + bankName + "&state=" + state + "&page=" + page, function(data) {
 	$("#table-container").html(data);
     });
 }

@@ -9,6 +9,7 @@ import random
 import sys
 from util import log
 import util
+import settings
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -21,6 +22,7 @@ class TableHandler(tornado.web.RequestHandler):
 	loader = Loader("./");
         bankName = self.get_argument("bank_name");
         state = self.get_argument("state");
+        page = int(self.get_argument("page", "1"));
         whereDict = dict();
 
         if bankName != "all":
@@ -35,12 +37,19 @@ class TableHandler(tornado.web.RequestHandler):
         else:
             whereDict[BankTable.COL_ACCEPTED] = BankTable.FLAG_POSTPONED;
 
-        bl = db.getBankList(whereDict);
-	self.write(loader.load("table.html").generate(banks=bl));
+        allBanks = db.getBankList(whereDict);
+        banks = allBanks[(page - 1)*settings.PAGE_COUNT: page*settings.PAGE_COUNT];
+        pageCount = len(allBanks)/settings.PAGE_COUNT;
+        if pageCount*settings.PAGE_COUNT < len(allBanks):
+            pageCount += 1;
+	self.write(loader.load("table.html").generate(banks=banks, pageCount=pageCount, page=page));
 
 class CheckHandler(tornado.web.RequestHandler):
     def get(self):
-        id = self.get_argument("id");
+        id = self.get_argument("id", default=None);
+        if id == None:
+            return;
+
         op = self.get_argument("op");
         if op == "accept":
             opFlag = BankTable.FLAG_ACCEPTED;
