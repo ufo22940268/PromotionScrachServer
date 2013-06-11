@@ -19,3 +19,10 @@ def getAcceptedFlag(op):
         return db.BankTable.FLAG_UNACCEPTED;
     else:
         return db.BankTable.FLAG_POSTPONED;
+
+def next_sibling(node, count):
+    i = 0;
+    for n in node.next_elements:
+        i += 1;
+        if i == count*2:
+            return n;
