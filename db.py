@@ -2,7 +2,6 @@
 import sqlite3
 import hashlib
 from bank import Bank
-from util import log
 import settings
 from settings import *
 

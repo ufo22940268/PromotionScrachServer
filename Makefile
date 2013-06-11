@@ -4,6 +4,7 @@ server:
 all:
 	python main.py
 
+.PHONY: test
 test:
 	python test.py
 
