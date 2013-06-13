@@ -18,4 +18,7 @@ print-db:
 	sqlite3 content.db "select * from bank"
 
 clear-db:
-	sqlite3 content.db "delete from bank"
+	python db.py
+
+print-name:
+	sqlite3 content.db "select * from name"

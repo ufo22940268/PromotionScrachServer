@@ -6,13 +6,13 @@ import urllib
 from time import gmtime, strftime
 from util import log
 
-class CgbGetter(BaseGetter):
+class BanksGetter(BaseGetter):
     def getName(self):
         return "广发银行";
 
     def fetchBankList(self):
         banks = [];
-        for page in range(1, self.TEST_PAGE_COUNT): 
+        for page in range(1, self.getPageRange()): 
             print "page", page
             f = self.openUrl("http://www.cgbchina.com.cn/Channel/11608406?_tp_info=" + str(page));
             if f == None:

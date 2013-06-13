@@ -13,7 +13,7 @@
         <td><input class="row-selector" type="checkbox" id="checkbox_{{ i }}" data-id="{{ bank.id }}" onclick="checkItem(this)"/></td>
         <td onclick="checkRow($(this).parent())">{{ bank.name }}</td>
         <td><a class="btn" href="{{ bank.url }}" target="_blank"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
-        <td>{{ bank.title }}</td>
+	<td><nobr>{{ bank.title }}</nobr></td>
         <td>{{ bank.fetchTime }}</td>
         <td>
             <div class="btn-group" data-toggle="buttons-radio" style="float:left;" data-id="{{ bank.id }}">

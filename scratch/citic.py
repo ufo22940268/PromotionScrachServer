@@ -3,14 +3,16 @@ from scratch.base import BaseGetter
 from bs4 import BeautifulSoup
 from bank import Bank
 
-class CiticGetter(BaseGetter):
+class BanksGetter(BaseGetter):
 
     def getName(self):
         return "中信银行";
 
     def fetchBankList(self):
-        f = urllib.urlopen("http://cards.ecitic.com/youhui/shuakahuodong.shtml");
-        #f = open("citic.html");
+        f = self.openUrl("http://cards.ecitic.com/youhui/shuakahuodong.shtml");
+        if f == None:
+            return;
+
         soup = BeautifulSoup(f);
         lis = soup.find_all("li", class_="emb4 item-n");
         banks = [];

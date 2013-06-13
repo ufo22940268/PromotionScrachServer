@@ -12,7 +12,7 @@ class BanksGetter(BaseGetter):
 
     def fetchBankList(self):
         banks = [];
-	for page in range(1, self.TEST_PAGE_COUNT): 
+	for page in range(1, self.getPageRange()): 
 	    f = self.openUrl("http://creditcard.ccb.com/ccapp/doSearch.do?type=bizSearch&s_cityid=0&s_provinceid=0&s_cateid=20100311_1268310067&s_catechildid=&s_lifeid=&pageNo=" + str(page) + "&s_searchKey=");
 	    if f == None:
 		break;

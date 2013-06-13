@@ -19,6 +19,12 @@ class BankTable():
     FLAG_ACCEPTED = 1;
     FLAG_POSTPONED = 2;
 
+class NameTable():
+    COL_ID = "_id";
+    COL_NAME = "name";
+
+    TABLE_NAME = "name";
+
 def getConnection():
     conn = sqlite3.connect("content.db");
     conn.row_factory = sqlite3.Row;
@@ -36,6 +42,12 @@ def createDb():
                 + BankTable.COL_ACCEPTED + " INTEGER DEFAULT 0, " 
                 + BankTable.COL_URL + " TEXT" 
                 + ")");
+
+    c.execute("DROP TABLE IF EXISTS " + NameTable.TABLE_NAME);
+    c.execute("CREATE TABLE " + NameTable.TABLE_NAME + "(" 
+                + NameTable.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NameTable.COL_NAME + " TEXT " 
+                + ")");
     conn.commit();
     c.close();
 
@@ -45,6 +57,17 @@ def insertBank(bank):
 
     c.execute("INSERT INTO bank(" + BankTable.COL_TITLE + "," + BankTable.COL_FETCH_TIME  + "," + BankTable.COL_NAME + "," + BankTable.COL_URL + ") values(?, ?, ?, ?)",
             (bank.title.decode("utf-8"), bank.fetchTime, bank.name.decode("utf-8"), bank.url.decode("utf-8")));
+    conn.commit();
+    c.close();
+    return True;
+
+def insertBankName(name):
+    name = name.decode("utf-8");
+    conn = getConnection();
+    c = conn.cursor();
+
+    c.execute("INSERT INTO " + NameTable.TABLE_NAME + "(" + NameTable.COL_NAME + ") values(?)",
+            (name,));
     conn.commit();
     c.close();
     return True;
@@ -84,7 +107,15 @@ def getBankList(whereDict):
     return banks;
 
 def getAvailableBanks():
-    return ["招商银行", "中信银行"];
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("SELECT " + NameTable.COL_NAME + " from " + NameTable.TABLE_NAME);
+    conn.commit();
+
+    names = [];
+    for row in c.fetchall():
+        names.append(row[NameTable.COL_NAME]);
+    return names;
 
 def checkProm(id, opFlag):
     conn = getConnection();

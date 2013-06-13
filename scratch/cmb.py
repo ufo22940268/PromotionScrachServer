@@ -7,7 +7,7 @@ import re
 import json
 from time import gmtime, strftime
 
-class CmbGetter(BaseGetter):
+class BanksGetter(BaseGetter):
 
     def getName(self):
         return "招商银行";
