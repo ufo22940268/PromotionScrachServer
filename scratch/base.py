@@ -8,7 +8,11 @@ class BaseGetter:
     TEST_PAGE_COUNT = 4;
 
     def openUrl(self, url):
-        f = urllib2.urlopen(url);
+        try:
+            f = urllib2.urlopen(url);
+        except urllib2.HTTPError:
+            return None;
+
 	if f.getcode() != 200:
 	    return None;
 	else:
@@ -30,4 +34,4 @@ class BaseGetter:
 
     def getPageRange(self):
         #return self.TEST_PAGE_COUNT;
-        return 2;
+        return 10;

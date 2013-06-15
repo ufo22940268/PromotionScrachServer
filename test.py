@@ -9,7 +9,8 @@ from scratch import bea
 from scratch import dalian
 from scratch import cqrcb
 from scratch import spdb
-bl = spdb.BanksGetter().fetchBankList();
+from scratch import cib
+bl = cib.BanksGetter().fetchBankList();
 if bl != None:
     for b in bl:
         print b

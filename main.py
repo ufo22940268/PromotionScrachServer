@@ -6,6 +6,7 @@ from bank import Bank
 from bs4 import BeautifulSoup
 import db
 import util
+
 import scratch.abc
 import scratch.ccb
 import scratch.ceb
