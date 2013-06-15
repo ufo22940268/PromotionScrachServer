@@ -4,7 +4,7 @@ from util import log
 from bs4 import BeautifulSoup
 
 class BaseGetter:
-    MAX_PAGE_COUNT = 2000;
+    MAX_PAGE_COUNT = 20000;
     TEST_PAGE_COUNT = 4;
 
     def openUrl(self, url):
@@ -29,4 +29,5 @@ class BaseGetter:
 	    open("test.html", "w").write(f.read());
 
     def getPageRange(self):
-        return self.TEST_PAGE_COUNT;
+        #return self.TEST_PAGE_COUNT;
+        return 2;
