@@ -10,7 +10,8 @@ from scratch import dalian
 from scratch import cqrcb
 from scratch import spdb
 from scratch import cib
-bl = cib.BanksGetter().fetchBankList();
+from scratch import pingan
+bl = pingan.BanksGetter().fetchBankList();
 if bl != None:
     for b in bl:
         print b

@@ -34,4 +34,4 @@ class BaseGetter:
 
     def getPageRange(self):
         #return self.TEST_PAGE_COUNT;
-        return 10;
+        return 3;
