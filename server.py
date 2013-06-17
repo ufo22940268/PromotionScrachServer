@@ -42,7 +42,54 @@ class TableHandler(tornado.web.RequestHandler):
         pageCount = len(allBanks)/settings.PAGE_COUNT;
         if pageCount*settings.PAGE_COUNT < len(allBanks):
             pageCount += 1;
-	self.write(loader.load("table.html").generate(banks=banks, pageCount=pageCount, page=page));
+        
+        pages = self.buildPages(page, pageCount);
+	self.write(loader.load("table.html").generate(banks=banks, pages=pages, activePage=page, pageCount=pageCount));
+
+    def buildPages(self, activePage, pageCount):
+        pages = [];
+        if pageCount <= 9:
+            for p in range(1, pageCount + 1):
+                pages.append(self.buildPage(activePage, pageCount, p));
+            return pages;
+        else:
+            ns = [activePage,];
+            delta = 1;
+            while True:
+                if 1 < activePage + delta < pageCount:
+                    ns.append(activePage + delta);
+                    if len(ns) == 7:
+                        break;
+
+                if 1 < activePage - delta < pageCount:
+                    ns.insert(0, activePage - delta);
+                    if len(ns) == 7:
+                        break;
+
+                delta += 1;
+            if 1 not in ns:
+                ns.insert(0, 1);
+            if pageCount not in ns:
+                ns.append(pageCount);
+
+            for p in ns:
+                pages.append(self.buildPage(activePage, pageCount, p));
+            return pages;
+
+                    
+    
+    def buildPage(self, activePage, pageCount, p):
+        page = dict();
+        page["text"] = str(p);
+        if p == 1 and activePage - 1 > 3:
+            page["text"] = "... " + page["text"];
+        elif p == pageCount and pageCount - activePage > 3: 
+            page["text"] = page["text"] + " ...";
+        page["value"] = p;
+        page["isActive"] = p == activePage;
+        return page;
+    
+
 
 class CheckHandler(tornado.web.RequestHandler):
     def get(self):
