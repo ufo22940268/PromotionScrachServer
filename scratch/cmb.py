@@ -15,7 +15,6 @@ class BanksGetter(BaseGetter):
     def fetchBankList(self):
         banks = [];
         cities = self.getCities();
-        print cities;
         for city in cities:
             url = "http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=%s&type=specialsale" % (city)
             f = urllib.urlopen(url);

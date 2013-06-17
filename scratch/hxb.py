@@ -25,11 +25,11 @@ class BanksGetter(BaseGetter):
 		    a = l.find("a");
 		    b.url = "http://creditcard.hxb.com.cn" + a["href"].encode("utf-8");
 		    b.title = a["title"].encode("utf-8").strip();
-		    h6 = l.find("h6").string.encode("utf-8");
-		    m = re.match("\[.*至(.*)\]", h6);
-		    b.endDate = date_parser.parseBottomDashLineStyle(m.group(1));
+		    h6 = l.find("h6").string;
+                    if h6 != None:
+                        m = re.match("\[.*至(.*)\]", h6.encode("utf-8"));
+                        if m != None:
+                            b.endDate = date_parser.parseBottomDashLineStyle(m.group(1));
 		    banks.append(b);
-
-		    return;
 
 	return banks;

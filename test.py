@@ -20,7 +20,7 @@ from scratch import pingan
 from scratch import beijing
 from scratch import nbcb
 from scratch import hxb
-bl = hxb.BanksGetter().fetchBankList();
+bl = ccb.BanksGetter().fetchBankList();
 if bl != None:
     for b in bl:
         print b

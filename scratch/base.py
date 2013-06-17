@@ -3,6 +3,7 @@ import urllib2
 from util import log
 from bs4 import BeautifulSoup
 import setting
+import sys
 
 class BaseGetter:
     MAX_PAGE_COUNT = 20000;
@@ -12,6 +13,7 @@ class BaseGetter:
 
 	if setting.DEBUG:
 	    print url;
+            sys.stdout.flush();
 
         try:
             f = urllib2.urlopen(url);
