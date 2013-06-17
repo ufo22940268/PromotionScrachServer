@@ -1,4 +1,5 @@
 import hashlib
+from datetime import datetime
 
 class Bank():
     """docstring for Bank"""
@@ -10,9 +11,10 @@ class Bank():
         self.name = "";
         self.fetchTime = "";
 	self.accepted = 0;
+	self.endDate = None;
 
     def __str__(self):
-        return "url:" + self.url + "\ttitle:" + self.title + "\tname:" + self.name;
+        return "url:" + self.url + "\ttitle:" + self.title + "\tendDate:" + str(self.endDate);
 
     def hashCode(self):
         urlAndTitle = self.url + self.title;

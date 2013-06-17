@@ -2,12 +2,17 @@ import urllib
 import urllib2
 from util import log
 from bs4 import BeautifulSoup
+import setting
 
 class BaseGetter:
     MAX_PAGE_COUNT = 20000;
     TEST_PAGE_COUNT = 4;
 
     def openUrl(self, url):
+
+	if setting.DEBUG:
+	    print url;
+
         try:
             f = urllib2.urlopen(url);
         except urllib2.HTTPError:
