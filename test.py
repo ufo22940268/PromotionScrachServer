@@ -1,3 +1,8 @@
+import pkgutil
+import scratch
+
+from bank import Bank
+
 from scratch import ccb
 from scratch import ceb
 from scratch import cmbc
@@ -13,7 +18,16 @@ from scratch import cib
 from scratch import pingan
 from scratch import beijing
 from scratch import nbcb
-bl = nbcb.BanksGetter().fetchBankList();
-if bl != None:
-    for b in bl:
-        print b
+#bl = cmbc.BanksGetter().fetchBankList();
+#if bl != None:
+    #for b in bl:
+        #print b
+
+def main():
+    b = Bank();
+    b.title = "ijijsdfiiia";
+    b.url = "http://iji.sdfij.com"
+    print b.hashCode();
+
+if __name__ == '__main__':
+    main()

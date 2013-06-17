@@ -1,4 +1,18 @@
-<div style="height:380px;">
+<div class="pagination pagination-right" style="margin:0px 0px 10px 0px">
+    <ul>
+        {% if page != 1 %}
+        <li><a href="#" onclick="loadContent('{{ page - 1 }}')">Prev</a></li>
+        {% end %}
+        {% for i in range(pageCount) %}
+        {% set p=i + 1 %}
+        <li class="{% if p == page %} active {% end %}" onclick="loadContent($(this).children().text())"><a href="#"> {{ p }}</a></li>
+        {% end %}
+        {% if page != pageCount %}
+        <li><a href="#" onclick="loadContent('{{ page + 1 }}')">Next</a></li>
+        {% end %}
+    </ul>
+</div>
+<!--<div style="height:380px;">-->
 <table class="table table-hover row-fluid" >
     <tr>
         <th></th>
@@ -26,18 +40,4 @@
     </tr>
     {% end %}
 </table>
-</div>
-<div class="pagination pagination-right">
-    <ul>
-        {% if page != 1 %}
-        <li><a href="#" onclick="loadContent('{{ page - 1 }}')">Prev</a></li>
-        {% end %}
-        {% for i in range(pageCount) %}
-        {% set p=i + 1 %}
-        <li class="{% if p == page %} active {% end %}" onclick="loadContent($(this).children().text())"><a href="#"> {{ p }}</a></li>
-        {% end %}
-        {% if page != pageCount %}
-        <li><a href="#" onclick="loadContent('{{ page + 1 }}')">Next</a></li>
-        {% end %}
-    </ul>
-</div>
+<!--</div>-->

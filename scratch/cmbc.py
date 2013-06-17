@@ -6,6 +6,7 @@ import urllib
 from time import gmtime, strftime
 from util import log
 import util
+import re
 
 class BanksGetter(BaseGetter):
     def getName(self):
@@ -14,6 +15,7 @@ class BanksGetter(BaseGetter):
     def fetchBankList(self):
         banks = [];
         for page in range(1, self.getPageRange()): 
+            print "http://creditcard.cmbc.com.cn/Ex-gratiaBusiness/ResultList.aspx?page=" + str(page);
             f = self.openUrl("http://creditcard.cmbc.com.cn/Ex-gratiaBusiness/ResultList.aspx?page=" + str(page));
 
             if f == None:
@@ -24,6 +26,13 @@ class BanksGetter(BaseGetter):
 	    for l in lis:
 		b = Bank();
                 b.url = "http://creditcard.cmbc.com.cn/Ex-gratiaBusiness/" + l.find("a")["href"].encode("utf-8");
-		b.title = l.parent.find("font").string.strip().encode("utf-8");
+		b.title = self.getTitleByUrl(b.url);
+
 		banks.append(b);
 	return banks;
+
+    def getTitleByUrl(self, url):
+        f = self.openUrl(url);
+        soup = BeautifulSoup(f, from_encoding="gbk");
+        return soup.find(style=re.compile(r"color:#ff0000;")).string.encode("utf-8");
+

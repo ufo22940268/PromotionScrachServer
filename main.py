@@ -8,22 +8,49 @@ import db
 import util
 
 import scratch.abc
+import scratch.bea
+import scratch.beijing
+import scratch.boc
 import scratch.ccb
 import scratch.ceb
 import scratch.cgb
+import scratch.cib
 import scratch.citic
-import scratch.cmbc
 import scratch.cmb
+import scratch.cmbc
+import scratch.comm
+import scratch.cqrcb
+import scratch.dalian
+import scratch.nbcb
+import scratch.pingan
+import scratch.psbc
+import scratch.spdb
 
 ALL_BANKS = [
-        scratch.abc,
-        scratch.ccb,
-        scratch.ceb,
-        scratch.cgb,
-        scratch.citic,
-        scratch.cmbc,
-        scratch.cmb,
+        scratch.abc
+        scratch.bea
+        scratch.beijing
+        scratch.boc
+        scratch.ccb
+        scratch.ceb
+        scratch.cgb
+        scratch.cib
+        scratch.citic
+        scratch.cmb
+        scratch.cmbc
+        scratch.comm
+        scratch.cqrcb
+        scratch.dalian
+        scratch.nbcb
+        scratch.pingan
+        scratch.psbc
+        scratch.spdb
         ]
+
+TEST_BANKS = {
+        scratch.abc
+        scratch.bea
+        }
 
 def fetchCmbBanks():
     f = urllib.urlopen("http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=0411&type=specialsale");
@@ -64,7 +91,8 @@ def real(index):
     return index*2;
 
 def temp():
-    for bankEntity in ALL_BANKS:
+    #for bankEntity in ALL_BANKS:
+    for bankEntity in TEST_BANKS:
         getter = bankEntity.BanksGetter();
         name = getter.getName();
         banks = getter.fetchBankList();

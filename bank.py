@@ -1,3 +1,5 @@
+import hashlib
+
 class Bank():
     """docstring for Bank"""
     def __init__(self):
@@ -12,3 +14,8 @@ class Bank():
     def __str__(self):
         return "url:" + self.url + "\ttitle:" + self.title + "\tname:" + self.name;
 
+    def hashCode(self):
+        urlAndTitle = self.url + self.title;
+        m = hashlib.md5();
+        m.update(urlAndTitle);
+        return m.hexdigest();

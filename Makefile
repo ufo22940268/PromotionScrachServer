@@ -23,4 +23,4 @@ clear-db:
 print-name:
 	sqlite3 content.db "select * from name"
 
-.DEFAULT_GOAL := test
+.DEFAULT_GOAL := server
