@@ -17,6 +17,13 @@ class BaseGetter:
 	    return None;
 	else:
 	    return f;
+
+    def getSoup(self, url):
+       f = self.openUrl(url); 
+       if f == None:
+           return None;
+       else:
+           return BeautifulSoup(f);
     
     def getName(self):
         """docstring for getName"""
