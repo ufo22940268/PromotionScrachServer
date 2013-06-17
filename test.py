@@ -12,7 +12,8 @@ from scratch import spdb
 from scratch import cib
 from scratch import pingan
 from scratch import nbcb
-bl = nbcb.BanksGetter().fetchBankList();
+from scratch import beijing
+bl = beijing.BanksGetter().fetchBankList();
 if bl != None:
     for b in bl:
         print b
