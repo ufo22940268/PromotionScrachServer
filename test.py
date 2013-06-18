@@ -21,7 +21,9 @@ from scratch import beijing
 from scratch import nbcb
 from scratch import hxb
 from scratch import boc
-bl = ecitic.BanksGetter().fetchBankList();
+from scratch import icbc
+
+bl = icbc.BanksGetter().fetchBankList();
 if bl != None:
     for b in bl:
         print b
