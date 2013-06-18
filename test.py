@@ -1,5 +1,8 @@
 import pkgutil
 import scratch
+import db
+import util
+from datetime import datetime
 
 from bank import Bank
 
@@ -20,10 +23,9 @@ from scratch import pingan
 from scratch import beijing
 from scratch import nbcb
 from scratch import hxb
-from scratch import boc
 from scratch import icbc
 
-bl = icbc.BanksGetter().fetchBankList();
-if bl != None:
-    for b in bl:
-        print b
+#bl = comm.BanksGetter().fetchBankList();
+#if bl != None:
+    #for b in bl:
+        #print b

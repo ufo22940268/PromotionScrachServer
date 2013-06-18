@@ -1,4 +1,5 @@
 #coding=utf-8
+import sys
 import sqlite3
 import hashlib
 from bank import Bank
@@ -12,6 +13,7 @@ class BankTable():
     COL_NAME = "name";
     COL_ACCEPTED = "accepted";
     COL_URL = "url";
+    COL_HASH = "hash";
 
     TABLE_NAME = "bank";
 
@@ -40,7 +42,8 @@ def createDb():
                 + BankTable.COL_FETCH_TIME + " TEXT, " 
                 + BankTable.COL_NAME + " TEXT, " 
                 + BankTable.COL_ACCEPTED + " INTEGER DEFAULT 0, " 
-                + BankTable.COL_URL + " TEXT" 
+                + BankTable.COL_URL + " TEXT," 
+                + BankTable.COL_HASH + " INTEGER" 
                 + ")");
 
     c.execute("DROP TABLE IF EXISTS " + NameTable.TABLE_NAME);
@@ -55,22 +58,48 @@ def insertBank(bank):
     conn = getConnection();
     c = conn.cursor();
 
-    c.execute("INSERT INTO bank(" + BankTable.COL_TITLE + "," + BankTable.COL_FETCH_TIME  + "," + BankTable.COL_NAME + "," + BankTable.COL_URL + ") values(?, ?, ?, ?)",
-            (bank.title.decode("utf-8"), bank.fetchTime, bank.name.decode("utf-8"), bank.url.decode("utf-8")));
-    conn.commit();
+    hashCode = bank.hashCode();
+    if not hasInDb(hashCode) and not bank.isExpired():
+        c.execute("INSERT INTO bank(" + BankTable.COL_TITLE + "," + BankTable.COL_FETCH_TIME  + "," + BankTable.COL_NAME + "," + BankTable.COL_URL + "," + BankTable.COL_HASH + ") values(?, ?, ?, ?, ?)",
+                (bank.title.decode("utf-8"), bank.fetchTime, bank.name.decode("utf-8"), bank.url.decode("utf-8"), hashCode,));
+        conn.commit();
+
     c.close();
     return True;
+
+def hasInDb(hashCode):
+    conn = getConnection();
+    c = conn.cursor();
+    #c.execute("SELECT * FROM %(table)s WHERE %(c_name)s = ?" % ("table":BankTable.TABLE_NAME, "c_name":BankTable.COL_NAME),
+    c.execute("SELECT * FROM %(table)s WHERE %(c_hash)s = ?" % {"table":BankTable.TABLE_NAME, "c_hash":BankTable.COL_HASH},
+            (hashCode,));
+    conn.commit();
+    cnt = len(c.fetchall());
+    c.close();
+    return cnt != 0;
+
 
 def insertBankName(name):
     name = name.decode("utf-8");
     conn = getConnection();
     c = conn.cursor();
 
-    c.execute("INSERT INTO " + NameTable.TABLE_NAME + "(" + NameTable.COL_NAME + ") values(?)",
-            (name,));
-    conn.commit();
+    if not hasBankNameInDb(name):
+        c.execute("INSERT INTO " + NameTable.TABLE_NAME + "(" + NameTable.COL_NAME + ") values(?)",
+                (name,));
+        conn.commit();
     c.close();
     return True;
+
+def hasBankNameInDb(name):
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("SELECT * FROM %(table)s WHERE %(name)s = ?" % {"table":NameTable.TABLE_NAME, "name":NameTable.COL_NAME},
+            (name,));
+    conn.commit();
+    cnt = len(c.fetchall());
+    c.close();
+    return cnt != 0;
 
 def buildWhereClause(d):
     if len(d) == 0:
@@ -134,6 +163,17 @@ def updateItemStates(ids, acFlag):
     conn.commit();
     c.close();
 
+def help():
+    print ''' usage:
+                python db.py create-db''';
 
 if __name__ == '__main__':
-    createDb();
+    if len(sys.argv) < 2:
+        help();
+        exit(-1);
+
+    if sys.argv[1] == "create-db":
+        createDb();
+    else:
+        help();
+        exit(-1);

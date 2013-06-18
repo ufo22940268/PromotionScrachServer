@@ -1,12 +1,9 @@
 server:
 	python server.py
 
-all:
+scratch-data:
 	python main.py
 
-.PHONY: test
-test:
-	python test.py
 
 save:
 	echo "success!"
@@ -18,9 +15,16 @@ print-db:
 	sqlite3 content.db "select * from bank"
 
 clear-db:
-	python db.py
+	sqlite3 content.db "delete from bank"
 
 print-name:
 	sqlite3 content.db "select * from name"
+
+create-db:
+	python db.py create-db
+
+.PHONY: test
+test:
+	python test.py
 
 .DEFAULT_GOAL := test

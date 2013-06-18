@@ -14,16 +14,18 @@ class BanksGetter(BaseGetter):
     def fetchBankList(self):
         banks = [];
         for page in range(1, self.getPageRange()): 
-            f = self.openUrl("http://creditcard.bankcomm.com/bcms/front/merchant/ajax/search.do?pageNo=" + str(page) + "&cityName=%E5%85%A8%E5%9B%BD");
+            f = self.openUrl("http://creditcard.bankcomm.com/bcms/front/merchant/ajax/search.do?pageNo=" + str(page) + "&tab=1&isPage=true");
 
             if f == None:
                 break;
 
 	    soup = BeautifulSoup(f);
-	    lis = soup.find_all("div", class_="ml-item");
-	    for l in lis:
-		b = Bank();
-                b.url = "http://creditcard.bankcomm.com/" + l.find("a")["href"].encode("utf-8");
-                b.title = l.find_all("div", class_="ml-end")[-1].contents[-1].encode("utf-8")
-		banks.append(b);
+            print soup.prittify().encode("utf-8");
+	    #lis = soup.find_all("div", class_="ml-item");
+	    #for l in lis:
+		#b = Bank();
+                #b.url = "http://creditcard.bankcomm.com/" + l.find("a")["href"].encode("utf-8");
+                #b.title = l.find_all("div", class_="ml-end")[-1].contents[-1].encode("utf-8")
+		#banks.append(b);
+
 	return banks;

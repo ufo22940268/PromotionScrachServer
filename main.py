@@ -8,89 +8,35 @@ import db
 import util
 
 import scratch.abc
-import scratch.bea
-import scratch.beijing
 import scratch.boc
 import scratch.ccb
-import scratch.ceb
-import scratch.cgb
 import scratch.cib
-import scratch.citic
 import scratch.cmb
-import scratch.cmbc
-import scratch.comm
-import scratch.cqrcb
-import scratch.dalian
-import scratch.nbcb
-import scratch.pingan
-import scratch.psbc
+import scratch.ecitic
+import scratch.icbc
 import scratch.spdb
 
+
 ALL_BANKS = [
-        scratch.abc
-        scratch.bea
-        scratch.beijing
-        scratch.boc
-        scratch.ccb
-        scratch.ceb
-        scratch.cgb
-        scratch.cib
-        scratch.citic
-        scratch.cmb
-        scratch.cmbc
-        scratch.comm
-        scratch.cqrcb
-        scratch.dalian
-        scratch.nbcb
-        scratch.pingan
-        scratch.psbc
-        scratch.spdb
+        scratch.abc,
+        scratch.boc,
+        scratch.ccb,
+        scratch.cib,
+        scratch.cmb,
+        scratch.ecitic,
+        scratch.icbc,
+        scratch.spdb,
         ]
 
 TEST_BANKS = {
-        scratch.abc
-        scratch.bea
+        scratch.abc,
+        scratch.spdb,
         }
-
-def fetchCmbBanks():
-    f = urllib.urlopen("http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=0411&type=specialsale");
-    raw = f.readlines();
-    strs = raw[:];
-    if strs != None:
-        i = strs[0].find("(");
-        new = strs[0][:i] + strs[0][i + 1:];
-        i = new.rfind(")");
-        new = new[:i] + new[i + 1:];
-
-    new = re.sub(r"(\w+):", r'"\1":', new);
-    new = re.sub(r"\"http\"", r'http', new);
-    blJo = json.loads(new)["list"];
-    banks = [];
-    for bJo in blJo:
-        b = inflateBank(bJo);
-        banks.append(b);
-    return banks;
-
-def fetchCiticBanks():
-    #f = urllib.urlopen("http://cards.ecitic.com/youhui/shuakahuodong.shtml");
-    f = open("citic.html");
-    soup = BeautifulSoup(f);
-    lis = soup.find_all("li", class_="emb4 item-n");
-    banks = [];
-    for li in lis:
-        b = Bank();
-        h2 = li.find_all("h2")[0];
-        b.title = h2.string.encode("utf-8");
-        b.name = "中信银行";
-        b.link = "http://cards.ecitic.com/youhui/" +li.find("a", class_="a-h")["href"];
-        banks.append(b);
-    return banks;
-
 
 def real(index):
     return index*2;
 
-def temp():
+def main():
     #for bankEntity in ALL_BANKS:
     for bankEntity in TEST_BANKS:
         getter = bankEntity.BanksGetter();
@@ -102,7 +48,7 @@ def temp():
             db.insertBank(b);
 
 if __name__ == '__main__':
-    temp();
+    main();
     #util.clearBankTable();
 
     #banks = [];

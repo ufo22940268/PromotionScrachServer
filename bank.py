@@ -1,5 +1,6 @@
 import hashlib
 from datetime import datetime
+from datetime import timedelta
 
 class Bank():
     """docstring for Bank"""
@@ -23,3 +24,10 @@ class Bank():
         m = hashlib.md5();
         m.update(urlAndTitle);
         return m.hexdigest();
+
+    def isExpired(self):
+	if not self.endDate:
+	    return False;
+	else:
+	    return (datetime.now() - self.endDate) > timedelta(days=1)
+
