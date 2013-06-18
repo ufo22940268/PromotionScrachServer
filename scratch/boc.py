@@ -5,6 +5,7 @@ from bank import Bank
 import urllib
 from time import gmtime, strftime
 from util import log
+import re
 
 #TODO Can't find the right website.
 class BanksGetter(BaseGetter):
@@ -12,21 +13,30 @@ class BanksGetter(BaseGetter):
         return "中国银行";
 
     def fetchBankList(self):
-        pass
+        banks = [];
+        banks += self.getBankListByUrl("http://www.boc.cn/bcservice/bi3/bi31/");
+        banks += self.getBankListByUrl("http://www.boc.cn/bcservice/bi3/bi32/");
+        return banks;
 
     def getBankListByUrl(self, url):
         banks = [];
-        #f = self.openUrl("http://www.boc.cn/sdbapp/rwmerchant/1581/1586/1588/");
-        #if f == None:
-            #break;
 
-        #soup = BeautifulSoup(f);
-        #lis = soup.find_all("dl", class_="cont-list");
-        #for l in lis:
-            #b = Bank();
-            #a = l.find("a");
-            #b.url = "http://creditcard.ccb.com" + l.find("a", class_="more")["href"].encode("utf-8");
-            #b.title = l.contents[-2].contents[-1].string.encode("utf-8").strip();
-            #banks.append(b);
-	#return banks;
+        soup = self.getSoup(url);
+        if not soup:
+            return;
+        lis = soup.find("table", width="550").find_all("a");
+        for a in lis:
+            b = Bank();
+            b.url = "url" + a["href"].encode("utf-8");
+            title = a.string.encode("utf-8");
+            b.title = re.sub("[\[\(](.*)[\]\)]", "", title);
+            m = re.match("[\[\(](.*?)[\]\)]", title);
+            if m:
+                s = m.group(1);
+                if s:
+                    if s == "已结束":
+                        continue
+                    else:
+                        b.city = s;
+            banks.append(b);
         return banks;

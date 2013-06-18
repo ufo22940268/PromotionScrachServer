@@ -8,7 +8,7 @@ from scratch import ccb
 from scratch import ceb
 from scratch import cmbc
 from scratch import abc
-from scratch import citic
+from scratch import ecitic
 from scratch import comm
 from scratch import psbc
 from scratch import bea
@@ -20,8 +20,8 @@ from scratch import pingan
 from scratch import beijing
 from scratch import nbcb
 from scratch import hxb
-bl = ccb.BanksGetter().fetchBankList();
+from scratch import boc
+bl = ecitic.BanksGetter().fetchBankList();
 if bl != None:
     for b in bl:
         print b
-

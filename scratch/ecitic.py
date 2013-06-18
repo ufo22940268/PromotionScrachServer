@@ -2,6 +2,8 @@
 from scratch.base import BaseGetter 
 from bs4 import BeautifulSoup
 from bank import Bank
+import date_parser
+import re
 
 class BanksGetter(BaseGetter):
 
@@ -22,6 +24,12 @@ class BanksGetter(BaseGetter):
             b.title = h2.string.encode("utf-8");
             b.name = self.getName();
             b.url = "http://cards.ecitic.com/youhui/" +li.find("a", class_="a-h")["href"].encode("utf-8");
+            ds = li.find("span", class_="date")
+            if ds and ds.string:
+                ds = ds.string.encode("utf-8");
+                print "ds", ds
+                m = re.match(r".*-(.*)", ds)
+                if m: 
+                    b.endDate = date_parser.parseSlashStyle(m.group(1).strip());
             banks.append(b);
-        #return dict(name=self.getName(), banks=banks);
         return banks;

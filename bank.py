@@ -8,13 +8,15 @@ class Bank():
         self.url = "";
         self.title = "";
 
+        #Optional
+        self.city = "";
         self.name = "";
         self.fetchTime = "";
 	self.accepted = 0;
 	self.endDate = None;
 
     def __str__(self):
-        return "url:" + self.url + "\ttitle:" + self.title + "\tendDate:" + str(self.endDate);
+        return "url:" + self.url + "\ntitle:" + self.title + "\nendDate:" + str(self.endDate) + "\ncity:" + self.city + "\n\n";
 
     def hashCode(self):
         urlAndTitle = self.url + self.title;
