@@ -6,6 +6,7 @@ import urllib
 from time import gmtime, strftime
 from util import log
 import util
+import date_parser
 
 class BanksGetter(BaseGetter):
     def getName(self):
@@ -14,18 +15,17 @@ class BanksGetter(BaseGetter):
     def fetchBankList(self):
         banks = [];
         for page in range(1, self.getPageRange()): 
-            f = self.openUrl("http://creditcard.bankcomm.com/bcms/front/merchant/ajax/search.do?pageNo=" + str(page) + "&tab=1&isPage=true");
+            url = "http://creditcard.bankcomm.com/bcms/front/activity/ajax/search.do?tab=1&pageNo=%d&isPage=true" % (page,);
+            soup = self.getSoup(url);
+            if not soup:
+                return banks
 
-            if f == None:
-                break;
-
-	    soup = BeautifulSoup(f);
-            print soup.prittify().encode("utf-8");
-	    #lis = soup.find_all("div", class_="ml-item");
-	    #for l in lis:
-		#b = Bank();
-                #b.url = "http://creditcard.bankcomm.com/" + l.find("a")["href"].encode("utf-8");
-                #b.title = l.find_all("div", class_="ml-end")[-1].contents[-1].encode("utf-8")
-		#banks.append(b);
+            lis = soup.find_all("div", class_="wzms");
+            for l in lis:
+                b = Bank();
+                b.url = l.find("img")["src"].encode("utf-8");
+                b.title = l.find("td", class_="t2").string.encode("utf-8").strip();
+                b.endDate = date_parser.parseZhiStyle(l.find("td", class_="t4").string.encode("utf-8").strip());
+                banks.append(b);
 
 	return banks;

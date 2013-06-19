@@ -1,5 +1,6 @@
 #coding=utf-8
 from datetime import datetime
+import re
 
 #1922-2-1
 def parseBottomDashLineStyle(dateStr):
@@ -33,3 +34,10 @@ def parseSlashStyle(dateStr):
             year = int(l[0]);
             month = int(l[1]);
             return datetime(year=year, month=month, day=1);
+
+def parseZhiStyle(s):
+    if s:
+        s = re.sub(r".*至(.*)", r"\1", s);
+        print "s", s , "$"
+        return parseBottomDashLineStyle(s);
+
