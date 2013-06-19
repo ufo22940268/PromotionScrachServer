@@ -29,16 +29,16 @@ ALL_BANKS = [
         ]
 
 TEST_BANKS = {
-        scratch.abc,
-        scratch.spdb,
+        scratch.cib,
+        scratch.boc,
         }
 
 def real(index):
     return index*2;
 
 def main():
-    for bankEntity in ALL_BANKS:
-    #for bankEntity in TEST_BANKS:
+    #for bankEntity in ALL_BANKS:
+    for bankEntity in TEST_BANKS:
         getter = bankEntity.BanksGetter();
         name = getter.getName();
         try: 

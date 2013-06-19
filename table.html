@@ -1,4 +1,4 @@
-<div class="pagination pagination-right" style="margin:0px 0px 10px 0px">
+<div class="pagination pagination-right" style="margin:0px 0px 10px 0px;">
     <ul>
         {% if activePage != 1 %}
         <li><a href="#" onclick="loadContent('{{ activePage - 1 }}')">Prev</a></li>
@@ -22,7 +22,7 @@
         <th>银行名称</th>
         <th>ID</th>
         <th>标题</th>
-        <th>采集日期</th>
+        <th>城市</th>
         <th>操作</th>
     </tr>
     {% for i, bank in enumerate(banks) %}
@@ -31,7 +31,7 @@
         <td onclick="checkRow($(this).parent())" style="width:60px">{{ bank.name }}</td>
         <td><a class="btn" href="{{ bank.url }}" target="_blank"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
 	<td style="width:320px">{{ bank.title }}</td>
-        <td>{{ bank.fetchTime }}</td>
+        <td>{{ bank.city }}</td>
         <td>
             <div class="btn-group" data-toggle="buttons-radio" style="float:left;" data-id="{{ bank.id }}">
                 <button type="button" class="btn btn-success {% if bank.accepted == 1 %} {{ 'active' }} {% end %}" onclick="acceptProm(this)" >采用</button>

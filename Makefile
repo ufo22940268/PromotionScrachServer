@@ -14,6 +14,9 @@ db:
 print-db:
 	sqlite3 content.db "select * from bank"
 
+print-city:
+	sqlite3 content.db "select * from city"
+
 clear-db:
 	sqlite3 content.db "delete from bank"
 
@@ -26,5 +29,8 @@ create-db:
 .PHONY: test
 test:
 	python test.py
+
+unit-test:
+	python unit_test.py
 
 .DEFAULT_GOAL := test

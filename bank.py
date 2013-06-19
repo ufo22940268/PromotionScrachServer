@@ -17,7 +17,7 @@ class Bank():
 	self.endDate = None;
 
     def __str__(self):
-        return "url:" + self.url + "\ntitle:" + self.title + "\nendDate:" + str(self.endDate) + "\ncity:" + self.city + "\n\n";
+        return "url:" + self.url + "\ntitle:" + self.title + "\nendDate:" + str(self.endDate) + "\ncity:" + str(self.city) + "\n\n";
 
     def hashCode(self):
         urlAndTitle = self.url + self.title;

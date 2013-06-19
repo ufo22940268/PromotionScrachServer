@@ -5,6 +5,7 @@ import hashlib
 from bank import Bank
 import settings
 from settings import *
+import util
 
 class BankTable():
     COL_ID = "_id";
@@ -14,6 +15,7 @@ class BankTable():
     COL_ACCEPTED = "accepted";
     COL_URL = "url";
     COL_HASH = "hash";
+    COL_CITY_ID = "city_id";
 
     TABLE_NAME = "bank";
 
@@ -26,6 +28,13 @@ class NameTable():
     COL_NAME = "name";
 
     TABLE_NAME = "name";
+
+class CityTable():
+    COL_ID = "_id";
+    COL_NAME = "name";
+
+    TABLE_NAME = "city";
+    DEFAULT_ID = -1;
 
 def getConnection():
     conn = sqlite3.connect("content.db");
@@ -43,7 +52,9 @@ def createDb():
                 + BankTable.COL_NAME + " TEXT, " 
                 + BankTable.COL_ACCEPTED + " INTEGER DEFAULT 0, " 
                 + BankTable.COL_URL + " TEXT," 
-                + BankTable.COL_HASH + " INTEGER" 
+                + BankTable.COL_HASH + " INTEGER," 
+                + BankTable.COL_CITY_ID + " INTEGER,"
+                + "FOREIGN KEY (" + BankTable.COL_CITY_ID + ") REFERENCES " + CityTable.TABLE_NAME + "(" + CityTable.COL_ID + ")"
                 + ")");
 
     c.execute("DROP TABLE IF EXISTS " + NameTable.TABLE_NAME);
@@ -51,6 +62,11 @@ def createDb():
                 + NameTable.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NameTable.COL_NAME + " TEXT " 
                 + ")");
+
+    c.execute("DROP TABLE IF EXISTS %s" % CityTable.TABLE_NAME);
+    c.execute("CREATE TABLE %(table)s(%(id)s INTEGER PRIMARY KEY AUTOINCREMENT, %(name)s TEXT)" % \
+	    {"table":CityTable.TABLE_NAME, "id":CityTable.COL_ID, "name":CityTable.COL_NAME});
+
     conn.commit();
     c.close();
 
@@ -58,10 +74,18 @@ def insertBank(bank):
     conn = getConnection();
     c = conn.cursor();
 
+    cityId = getCityId(bank.city);
     hashCode = bank.hashCode();
     if not hasInDb(hashCode) and not bank.isExpired():
-        c.execute("INSERT INTO bank(" + BankTable.COL_TITLE + "," + BankTable.COL_FETCH_TIME  + "," + BankTable.COL_NAME + "," + BankTable.COL_URL + "," + BankTable.COL_HASH + ") values(?, ?, ?, ?, ?)",
-                (bank.title.decode("utf-8"), bank.fetchTime, bank.name.decode("utf-8"), bank.url.decode("utf-8"), hashCode,));
+        c.execute("INSERT INTO bank(" 
+		+ BankTable.COL_TITLE + "," 
+		+ BankTable.COL_FETCH_TIME  + "," 
+		+ BankTable.COL_NAME + "," 
+		+ BankTable.COL_URL + "," 
+		+ BankTable.COL_HASH + "," 
+		+ BankTable.COL_CITY_ID + ")" 
+		+ " values(?, ?, ?, ?, ?, ?)",
+                (bank.title.decode("utf-8"), bank.fetchTime, bank.name.decode("utf-8"), bank.url.decode("utf-8"), hashCode, cityId,));
         conn.commit();
 
     c.close();
@@ -70,7 +94,6 @@ def insertBank(bank):
 def hasInDb(hashCode):
     conn = getConnection();
     c = conn.cursor();
-    #c.execute("SELECT * FROM %(table)s WHERE %(c_name)s = ?" % ("table":BankTable.TABLE_NAME, "c_name":BankTable.COL_NAME),
     c.execute("SELECT * FROM %(table)s WHERE %(c_hash)s = ?" % {"table":BankTable.TABLE_NAME, "c_hash":BankTable.COL_HASH},
             (hashCode,));
     conn.commit();
@@ -115,11 +138,16 @@ def buildWhereClause(d):
     return where;
     
 
-def getBankList(whereDict):
+def getBankList(whereDict, city="all"):
     conn = getConnection();
     c = conn.cursor();
     where = buildWhereClause(whereDict);
-    c.execute("select * from " + BankTable.TABLE_NAME + " " + where, list(whereDict.viewvalues()));
+    if city and city != "all":
+	where += " and ct_name = '%s'" % city;
+
+    c.execute("select * from " + BankTable.TABLE_NAME 
+	    + " left join " + " (select _id as ct_id, name as ct_name from city) "  + "  on ct_id == _id "
+	    + where, list(whereDict.viewvalues()));
 
     conn.commit();
 
@@ -132,6 +160,9 @@ def getBankList(whereDict):
 	bank.accepted = row[BankTable.COL_ACCEPTED];
 	bank.url = row[BankTable.COL_URL];
         bank.id = row[BankTable.COL_ID];
+	city = row["ct_name"];
+	if city:
+	    bank.city = city;
 	banks.append(bank);
     return banks;
 
@@ -162,6 +193,31 @@ def updateItemStates(ids, acFlag):
                 " where " + BankTable.COL_ID + " = ?", (acFlag, id,));
     conn.commit();
     c.close();
+
+def getCityId(name):
+    if not name:
+	return CityTable.DEFAULT_ID;
+
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("select * from %(table)s where %(name)s = ?" % {"table":CityTable.TABLE_NAME, "name":CityTable.COL_NAME,}, (name.decode("utf-8"),)) ;
+    conn.commit();
+    rows = c.fetchall();
+    id = None;
+    if len(rows) > 0:
+	id = rows[0][CityTable.COL_ID];
+    else:
+	id = insertNewCity(name);
+    return id;
+
+def insertNewCity(city):
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("insert into %s(%s) values(?)" % (CityTable.TABLE_NAME, CityTable.COL_NAME), (city.decode("utf-8"),));
+    conn.commit();
+    id =  c.lastrowid;
+    c.close();
+    return id;
 
 def help():
     print ''' usage:

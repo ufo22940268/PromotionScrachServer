@@ -1,0 +1,7 @@
+<select id="opt-city" name="" class="opt-selector" style="margin-right:8px" onchange="loadContent()">
+    <option value="all">所有</option>
+    {% for city in cities %}
+    <option value="{{ city }}" {% if activedCity == city %} selected {% end %}>{{ city }}</option>
+    {% end %}
+</select>
+

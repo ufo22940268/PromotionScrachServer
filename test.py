@@ -24,8 +24,9 @@ from scratch import beijing
 from scratch import nbcb
 from scratch import hxb
 from scratch import icbc
+from scratch import boc
 
-#bl = comm.BanksGetter().fetchBankList();
+#bl = boc.BanksGetter().fetchBankList();
 #if bl != None:
     #for b in bl:
-        #print b
+	#print b

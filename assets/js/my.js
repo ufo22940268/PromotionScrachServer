@@ -72,8 +72,14 @@ function loadContent(page) {
     showLoading();
     var bankName = $("#opt-bank option:selected").val();
     var state = $("#opt-handle option:selected").val();
-    $.get("table.html?bank_name=" + bankName + "&state=" + state + "&page=" + page, function(data) {
+    var city = $("#opt-city option:selected").val();
+    var url = "table.html?bank_name=" + bankName + "&state=" + state + "&page=" + page + "&city=" + city; 
+    $.get(url, function(data) {
 	$("#table-container").html(data);
+    });
+
+    $.get(url + "&isOption=true", function(data) {
+	$("#opt-city").html(data);
     });
 }
 loadContent();

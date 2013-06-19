@@ -23,6 +23,7 @@ class TableHandler(tornado.web.RequestHandler):
         bankName = self.get_argument("bank_name");
         state = self.get_argument("state");
         page = int(self.get_argument("page", "1"));
+        city = self.get_argument("city", "all");
         whereDict = dict();
 
         if bankName != "all":
@@ -37,7 +38,12 @@ class TableHandler(tornado.web.RequestHandler):
         else:
             whereDict[BankTable.COL_ACCEPTED] = BankTable.FLAG_POSTPONED;
 
-        allBanks = db.getBankList(whereDict);
+        allBanks = db.getBankList(whereDict, city);
+	if self.get_argument("isOption", "false") == "true":
+	    cities = self.extractCities(db.getBankList(whereDict));
+	    self.write(loader.load("option.html").generate(activedCity=city, cities=cities));
+	    return;
+
         banks = allBanks[(page - 1)*settings.PAGE_COUNT: page*settings.PAGE_COUNT];
         pageCount = len(allBanks)/settings.PAGE_COUNT;
         if pageCount*settings.PAGE_COUNT < len(allBanks):
@@ -88,7 +94,13 @@ class TableHandler(tornado.web.RequestHandler):
         page["value"] = p;
         page["isActive"] = p == activePage;
         return page;
-    
+
+    def extractCities(self, banks):
+	cities = set();
+	for b in banks:
+	    if b.city:
+		cities.add(b.city);
+	return cities;
 
 
 class CheckHandler(tornado.web.RequestHandler):

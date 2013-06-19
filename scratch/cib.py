@@ -2,6 +2,8 @@
 from scratch.base import BaseGetter 
 from bs4 import BeautifulSoup
 from bank import Bank
+import city_parser
+import re
 
 class BanksGetter(BaseGetter):
 
@@ -38,7 +40,6 @@ class BanksGetter(BaseGetter):
         return banks;
 
     def fetchBankListByUrl(self, url):
-        print "url:",url;
         banks = [];
 
         f = self.openUrl(url);
@@ -56,7 +57,9 @@ class BanksGetter(BaseGetter):
             else:
                 b.url = "http://creditcard.cib.com.cn/" + href;
 
-            b.title = a.string.strip().encode("utf-8");
+            title = a.string.strip().encode("utf-8");
+	    b.city = city_parser.parseBracketStyle(title);
+	    b.title = re.sub(r"\[.*?\](.*)", r"\1", title);
             banks.append(b);
         return banks;
 
@@ -74,7 +77,6 @@ class BanksGetter(BaseGetter):
     def getBankListIterate(self, rawUrl, func):
         banks = [];
 	for page in range(0, self.getPageRange()):
-            #url = cityUrl + "_" + str(n - page) + ".html";
             url = rawUrl + "_" + str(func(page)) + ".html";
             bs =  self.fetchBankListByUrl(url);
             if bs == None:
