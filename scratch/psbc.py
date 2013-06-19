@@ -14,19 +14,27 @@ class BanksGetter(BaseGetter):
 
     def fetchBankList(self):
         banks = [];
-        for page in range(1, self.getPageRange()): 
-            f = self.openUrl("http://www.psbc.com/portal/main?transName=searchShop&province=&city=&card=&shoptype=&rate=&keyvalue=%E8%BE%93%E5%85%A5%E5%95%86%E6%88%B7%E5%90%8D%E7%A7%B0%E6%88%96%E5%9C%B0%E5%8C%BA%E5%90%8D&intpage=" + str(page));
-
-            if f == None:
+        baseUrl = "http://www.psbc.com/portal/zh_CN/CreditCard/SpecialOffers/index%s.html";
+        for page in range(0, self.getPageRange()): 
+            if page == 0:
+                url = baseUrl % ("",);
+            else:
+                url = baseUrl % ("_" + str(page),);
+            soup = self.getSoup(url);
+            if not soup:
                 break;
 
-	    soup = BeautifulSoup(f);
-	    lis = soup.find_all("div", class_="shanghu");
-	    for l in lis:
-		b = Bank();
-                onclick = l.find("input")["onclick"];
-                m = re.search(r"window\.open\('([^']*)'", onclick);
-                b.url = "http://www.psbc.com/" + m.group(1).encode("utf-8");
-                b.title = l.find("td", text="优惠折扣：").next_sibling.next_sibling.string.strip().encode("utf-8");
-		banks.append(b);
+            for a in soup.find("ul", class_="artic_list clearfix").find_all("a"):
+                b = Bank();
+                b.url = "http://www.psbc.com" + a["href"].encode("utf-8");
+                title = a.string.encode("utf-8");
+                m = re.match("(.*)：(.*)", title);
+                if not m:
+                    b.title = title;
+                else:
+                    b.title = m.group(2);
+                    b.city = m.group(1);
+
+                banks.append(b);
+            
 	return banks;

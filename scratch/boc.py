@@ -27,7 +27,7 @@ class BanksGetter(BaseGetter):
         lis = soup.find("table", width="550").find_all("a");
         for a in lis:
             b = Bank();
-	    b.url = "http://www.boc.cn/" + a["href"].encode("utf-8");
+	    b.url = url + a["href"].encode("utf-8");
             title = a.string.encode("utf-8");
             b.title = re.sub("[\[\(](.*)[\]\)]", "", title);
             m = re.match("[\[\(](.*?)[\]\)]", title);
