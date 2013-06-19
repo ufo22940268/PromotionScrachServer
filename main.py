@@ -18,12 +18,12 @@ import scratch.spdb
 
 
 ALL_BANKS = [
+        scratch.ecitic,
+        scratch.cmb,
         scratch.abc,
         scratch.boc,
         scratch.ccb,
         scratch.cib,
-        scratch.cmb,
-        scratch.ecitic,
         scratch.icbc,
         scratch.spdb,
         ]
@@ -37,15 +37,19 @@ def real(index):
     return index*2;
 
 def main():
-    #for bankEntity in ALL_BANKS:
-    for bankEntity in TEST_BANKS:
+    for bankEntity in ALL_BANKS:
+    #for bankEntity in TEST_BANKS:
         getter = bankEntity.BanksGetter();
         name = getter.getName();
-        banks = getter.fetchBankList();
-        db.insertBankName(name);
-        for b in banks:
-            b.name = name;
-            db.insertBank(b);
+        try: 
+            banks = getter.fetchBankList();
+            db.insertBankName(name);
+            for b in banks:
+                b.name = name;
+                db.insertBank(b);
+        except:
+            print "bank %s error" % (name,);
+
 
 if __name__ == '__main__':
     main();
