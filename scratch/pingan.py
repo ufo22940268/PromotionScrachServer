@@ -22,6 +22,9 @@ class BanksGetter(BaseGetter):
                 break;
 
             lis = soup.find_all("tr", class_="item");
+            if len(lis) == 0:
+                break;
+
             for l in lis:
                 b = Bank();
                 a = l.find("a");
