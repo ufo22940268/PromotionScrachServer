@@ -6,6 +6,7 @@ from bank import Bank
 from bs4 import BeautifulSoup
 import db
 import util
+import sys
 
 import scratch.abc
 import scratch.boc
@@ -29,16 +30,15 @@ ALL_BANKS = [
         ]
 
 TEST_BANKS = {
-        scratch.cib,
+        scratch.ccb,
         scratch.boc,
         }
 
 def real(index):
     return index*2;
 
-def main():
-    #for bankEntity in ALL_BANKS:
-    for bankEntity in TEST_BANKS:
+def fetchProms(bankEntities):
+    for bankEntity in bankEntities:
         getter = bankEntity.BanksGetter();
         name = getter.getName();
         try: 
@@ -50,15 +50,21 @@ def main():
         except:
             print "bank %s error" % (name,);
 
+def help():
+    print '''
+            ussage:
+                python main.py [normal|test]'''
+
 
 if __name__ == '__main__':
-    main();
-    #util.clearBankTable();
+    if len(sys.argv) < 2:
+        help();
+        exit(-1);
 
-    #banks = [];
-    #banks = banks  + fetchCmbBanks();
-    #banks = banks  + fetchCiticBanks();
-    #for b in banks:
-        #db.insertBank(b);    
-
-    #util.printBankTable();
+    if sys.argv[1] == "normal":
+        fetchProms(ALL_BANKS);
+    elif sys.argv[1] == "test": 
+        fetchProms(TEST_BANKS);
+    else:
+        help();
+        exit(-1);

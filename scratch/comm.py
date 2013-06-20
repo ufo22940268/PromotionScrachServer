@@ -8,13 +8,15 @@ from util import log
 import util
 import date_parser
 
+FIXED_COUNT = 8;
 class BanksGetter(BaseGetter):
     def getName(self):
         return "交通银行";
 
     def fetchBankList(self):
         banks = [];
-        for page in range(1, self.getPageRange()): 
+        
+        for page in range(1, FIXED_COUNT): 
             url = "http://creditcard.bankcomm.com/bcms/front/activity/ajax/search.do?tab=1&pageNo=%d&isPage=true" % (page,);
             soup = self.getSoup(url);
             if not soup:

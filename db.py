@@ -6,6 +6,7 @@ from bank import Bank
 import settings
 from settings import *
 import util
+from datetime import datetime
 
 class BankTable():
     COL_ID = "_id";
@@ -37,7 +38,8 @@ class CityTable():
     DEFAULT_ID = -1;
 
 def getConnection():
-    conn = sqlite3.connect("content.db");
+    dbName = settings.getDbName();
+    conn = sqlite3.connect(dbName);
     conn.row_factory = sqlite3.Row;
     return conn;
 
@@ -74,6 +76,7 @@ def insertBank(bank):
     conn = getConnection();
     c = conn.cursor();
 
+    now = datetime.now().strftime('%Y-%m-%d');
     cityId = getCityId(bank.city);
     hashCode = bank.hashCode();
     if not hasInDb(hashCode) and not bank.isExpired():
@@ -85,7 +88,7 @@ def insertBank(bank):
 		+ BankTable.COL_HASH + "," 
 		+ BankTable.COL_CITY_ID + ")" 
 		+ " values(?, ?, ?, ?, ?, ?)",
-                (bank.title.decode("utf-8"), bank.fetchTime, bank.name.decode("utf-8"), bank.url.decode("utf-8"), hashCode, cityId,));
+                (bank.title.decode("utf-8"), now, bank.name.decode("utf-8"), bank.url.decode("utf-8"), hashCode, cityId,));
         conn.commit();
 
     c.close();

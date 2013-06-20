@@ -2,7 +2,7 @@ import urllib
 import urllib2
 from util import log
 from bs4 import BeautifulSoup
-import setting
+import settings
 import sys
 
 class BaseGetter:
@@ -11,7 +11,7 @@ class BaseGetter:
 
     def openUrl(self, url):
 
-	if setting.DEBUG:
+	if settings.MODE_DEBUG:
 	    print url;
             sys.stdout.flush();
 
@@ -47,5 +47,7 @@ class BaseGetter:
 	    open("test.html", "w").write(f.read());
 
     def getPageRange(self):
-        #return self.TEST_PAGE_COUNT;
-        return 2;
+	if settings.mode == settings.MODE_DEBUG:
+	    return 2;
+	else:
+	    return MAX_PAGE_COUNT;

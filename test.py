@@ -26,7 +26,10 @@ from scratch import hxb
 from scratch import icbc
 from scratch import boc
 
-bl = beijing.BanksGetter().fetchBankList();
-if bl != None:
-    for b in bl:
-	print b
+banks = [icbc, ccb]
+
+for bank in banks:
+    bl = bank.BanksGetter().fetchBankList();
+    if bl != None:
+	for b in bl:
+	    print b

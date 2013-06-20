@@ -11,7 +11,7 @@ import date_parser
 class BanksGetter(BaseGetter):
 
     def getName(self):
-        return "建设银行";
+        return "工商银行";
 
 
     def fetchBankList(self):
@@ -63,4 +63,3 @@ class BanksGetter(BaseGetter):
 
     def removeCity(self, s):
         return re.sub(r".+--", "", s);
-

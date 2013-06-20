@@ -2,9 +2,10 @@ server:
 	python server.py
 
 scratch-data:
-	python main.py
+	python main.py normal
 
-
+scratch-test-data:
+	python main.py test
 save:
 	echo "success!"
 
