@@ -9,14 +9,22 @@ import util
 import sys
 import traceback
 
-import scratch.abc
-import scratch.boc
-import scratch.ccb
-import scratch.cib
 import scratch.cmb
+import scratch.ceb
+import scratch.hxb
+import scratch.ccb
+import scratch.cmbc
+import scratch.abc
+import scratch.spdb
+import scratch.cib
+import scratch.boc
 import scratch.ecitic
 import scratch.icbc
-import scratch.spdb
+import scratch.comm
+import scratch.psbc
+import scratch.pingan
+import scratch.nbcb
+import scratch.icbc
 
 
 ALL_BANKS = [
