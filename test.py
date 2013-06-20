@@ -26,7 +26,7 @@ from scratch import hxb
 from scratch import icbc
 from scratch import boc
 
-banks = [hxb,]
+banks = [abc,]
 
 for bank in banks:
     bl = bank.BanksGetter().fetchBankList();

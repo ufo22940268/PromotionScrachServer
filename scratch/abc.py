@@ -24,8 +24,8 @@ class BanksGetter(BaseGetter):
             else:
                 soup = self.getSoup("http://www.abchina.com/cn/PublicPlate/ABCPromotion/default_%d.htm" % (page,));
 
-            if soup == None:
-                return;
+            if not self.isValidSoup(soup):
+                break;
 
             lis = soup.find_all("li", class_="DotLi100");
             for l in lis:
@@ -52,3 +52,6 @@ class BanksGetter(BaseGetter):
                 return date_parser.parseChineseStyle(m.group(1));
         except:
             pass
+
+    def isValidSoup(self, soup):
+        return not soup or soup.encode("utf-8").find("错误信息") == -1
