@@ -38,7 +38,7 @@
             <div class="btn-group" data-toggle="buttons-radio" style="float:left;" data-id="{{ bank.id }}">
                 <button type="button" class="btn btn-success {% if bank.accepted == 1 %} {{ 'active' }} {% end %}" onclick="acceptProm(this)" >采用</button>
                 <button type="button" class="btn btn-success {% if bank.accepted == 0 %} {{ 'active' }} {% end %}" onclick="unacceptProm(this)">弃用</button>
-                <button type="button" class="btn btn-success {% if bank.accepted == 2 %} {{ 'active' }} {% end %}" onclick="postponeProm(this)">跳过</button>
+                <button type="button" class="btn btn-success {% if bank.accepted == 2 %} {{ 'active' }} {% end %}" onclick="postponeProm(this)">待处理</button>
             </div>
             <img src="assets/img/tiny_loading.gif" alt="" style="margin-left:10px;visibility:hidden;"/>
         </td>
