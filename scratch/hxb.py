@@ -29,7 +29,7 @@ class BanksGetter(BaseGetter):
                     if h6 != None:
                         m = re.match("\[.*至(.*)\]", h6.encode("utf-8"));
                         if m != None:
-                            b.endDate = date_parser.parseBottomDashLineStyle(m.group(1));
+                            b.endDate = date_parser.parseDashLineStyle(m.group(1));
 		    banks.append(b);
 
 	return banks;

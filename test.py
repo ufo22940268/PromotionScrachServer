@@ -26,7 +26,7 @@ from scratch import hxb
 from scratch import icbc
 from scratch import boc
 
-bl = psbc.BanksGetter().fetchBankList();
+bl = beijing.BanksGetter().fetchBankList();
 if bl != None:
     for b in bl:
 	print b

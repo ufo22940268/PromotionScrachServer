@@ -3,7 +3,7 @@ from datetime import datetime
 import re
 
 #1922-2-1
-def parseBottomDashLineStyle(dateStr):
+def parseDashLineStyle(dateStr):
     if dateStr:
         return datetime.strptime(dateStr, "%Y-%m-%d");
 
@@ -39,5 +39,5 @@ def parseZhiStyle(s):
     if s:
         s = re.sub(r".*至(.*)", r"\1", s);
         print "s", s , "$"
-        return parseBottomDashLineStyle(s);
+        return parseDashLineStyle(s);
 
