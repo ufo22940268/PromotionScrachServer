@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import db
 import util
 import sys
+import traceback
 
 import scratch.abc
 import scratch.boc
@@ -30,8 +31,8 @@ ALL_BANKS = [
         ]
 
 TEST_BANKS = {
-        scratch.ccb,
-        scratch.boc,
+        scratch.cib,
+        #scratch.abc,
         }
 
 def real(index):
@@ -48,6 +49,7 @@ def fetchProms(bankEntities):
                 b.name = name;
                 db.insertBank(b);
         except:
+            print traceback.print_exc();
             print "bank %s error" % (name,);
 
 def help():
