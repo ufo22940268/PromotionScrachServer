@@ -1,8 +1,10 @@
+import ignore_me
+
 MODE_DEBUG = 0;
 MODE_RELEASE = 1;
 
 #Please check mode before run.
-mode = MODE_DEBUG;
+mode = ignore_me.mode;
 
 PAGE_COUNT = 7;
 TEST_DATABASE = "test_content.db";
