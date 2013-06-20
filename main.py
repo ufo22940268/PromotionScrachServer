@@ -20,14 +20,25 @@ import scratch.spdb
 
 
 ALL_BANKS = [
-        scratch.ecitic,
+        #----------1----------
         scratch.cmb,
-        scratch.abc,
-        scratch.boc,
+        scratch.ceb,
+        scratch.hxb,
         scratch.ccb,
-        scratch.cib,
-        scratch.icbc,
+        scratch.cmbc,
+        scratch.abc,
         scratch.spdb,
+        scratch.cib,
+        scratch.boc,
+        scratch.ecitic,
+        scratch.icbc,
+
+        #----------2----------
+        scratch.comm,
+        scratch.psbc,
+        scratch.pingan,
+        scratch.nbcb,
+        scratch.icbc,
         ]
 
 TEST_BANKS = {

@@ -10,9 +10,9 @@ class BaseGetter:
     TEST_PAGE_COUNT = 4;
 
     def openUrl(self, url):
-	if settings.mode == settings.MODE_DEBUG:
-	    print url;
-            sys.stdout.flush();
+	#if settings.mode == settings.MODE_DEBUG:
+        print url;
+        sys.stdout.flush();
 
         try:
             f = urllib2.urlopen(url);

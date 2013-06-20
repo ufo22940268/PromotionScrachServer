@@ -27,7 +27,6 @@ class BanksGetter(BaseGetter):
             ds = li.find("span", class_="date")
             if ds and ds.string:
                 ds = ds.string.encode("utf-8");
-                print "ds", ds
                 m = re.match(r".*-(.*)", ds)
                 if m: 
                     b.endDate = date_parser.parseSlashStyle(m.group(1).strip());
