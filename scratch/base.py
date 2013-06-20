@@ -6,9 +6,6 @@ import settings
 import sys
 
 class BaseGetter:
-    MAX_PAGE_COUNT = 20000;
-    TEST_PAGE_COUNT = 4;
-
     def openUrl(self, url):
 	#if settings.mode == settings.MODE_DEBUG:
         print url;
@@ -47,6 +44,6 @@ class BaseGetter:
 
     def getPageRange(self):
 	if settings.mode == settings.MODE_DEBUG:
-	    return self.MAX_PAGE_COUNT;
+	    return settings.TEST_PAGE_COUNT;
 	else:
-	    return self.MAX_PAGE_COUNT;
+	    return settings.MAX_PAGE_COUNT;

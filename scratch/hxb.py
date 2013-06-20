@@ -19,6 +19,10 @@ class BanksGetter(BaseGetter):
 	    for page in range(0, self.getPageRange()): 
 		url = prefUrl + "&page_count=30&page_start=%d" % (page*5);
 		soup = self.getSoup(url);
+
+                if not self.isValidSoup(soup):
+                    break;
+
 		lis = soup.find_all("div", id="rm_lcd");
 		for l in lis:
 		    b = Bank();
@@ -33,3 +37,13 @@ class BanksGetter(BaseGetter):
 		    banks.append(b);
 
 	return banks;
+
+    def isValidSoup(self, soup):
+        if not soup:
+            return False;
+
+        if soup.encode("utf-8").find("对不起，没有找到您要查看的内容，请查看其他相关内容！") != -1:
+            return False;
+        else:
+            return True;
+

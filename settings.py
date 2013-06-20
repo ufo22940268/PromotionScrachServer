@@ -9,6 +9,9 @@ TEST_DATABASE = "test_content.db";
 NORMAL_DATABASE = "content.db";
 DATABASE_NAME = TEST_DATABASE;
 
+MAX_PAGE_COUNT = 20000;
+TEST_PAGE_COUNT = 1000;
+
 def getDbName():
     if mode == MODE_DEBUG:
         return TEST_DATABASE;

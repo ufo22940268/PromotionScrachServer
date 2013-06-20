@@ -50,7 +50,7 @@ ALL_BANKS = [
         ]
 
 TEST_BANKS = {
-        scratch.cib,
+        scratch.hxb,
         #scratch.abc,
         }
 
