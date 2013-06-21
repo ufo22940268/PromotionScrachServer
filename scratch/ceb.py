@@ -15,6 +15,10 @@ class BanksGetter(BaseGetter):
         for page in range(1, self.getPageRange()): 
 	    url = "http://xyk.cebbank.com/home/activities/category/a_life_cycle/list%d.htm" % page;
 	    soup = self.getSoup(url);
+
+            if not self.isValidSoup(soup):
+                break;
+
 	    lis = soup.find("ul", class_="th_list_ul").find_all("div", class_="floatleft");
 	    for l in lis:
 		b = Bank();
@@ -23,3 +27,10 @@ class BanksGetter(BaseGetter):
 		b.title = a.string.encode("utf-8").strip();
 		banks.append(b);
 	return banks;
+
+    def isValidSoup(self, soup):
+        if soup and soup.get_text().encode("utf-8").find("出错啦") == -1:
+            return True;
+        else:
+            return False;
+

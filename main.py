@@ -26,6 +26,12 @@ import scratch.pingan
 import scratch.nbcb
 import scratch.icbc
 
+TEST_BANKS = {
+        #scratch.cmb,
+        scratch.ceb,
+        #scratch.abc,
+        }
+
 
 ALL_BANKS = [
         #----------1----------
@@ -49,11 +55,6 @@ ALL_BANKS = [
         scratch.icbc,
         ]
 
-TEST_BANKS = {
-        #scratch.cmb,
-        scratch.icbc,
-        #scratch.abc,
-        }
 
 def real(index):
     return index*2;
