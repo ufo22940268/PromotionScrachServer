@@ -38,6 +38,8 @@ class BanksGetter(BaseGetter):
                 b = self.inflateBank(bJo);
                 b.city = cityName;
                 banks.append(b);
+
+        banks = self.correctBanks(banks);
         return banks;
 
     def inflateBank(self, jo):
@@ -65,3 +67,15 @@ class BanksGetter(BaseGetter):
                 name = m.group(2).encode("utf-8");
                 cities.append(dict(id=id, name=name));
         return cities;
+
+    def correctBanks(self, banks):
+        bd = dict();
+
+        for b in banks:
+            k = b.title + b.url;
+            if not bd.get(k):
+                bd[k] = b;
+            else:
+                bd[k].city = None;
+
+        return bd.values();

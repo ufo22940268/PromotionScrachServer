@@ -13,7 +13,7 @@ class Bank():
         self.city = "";
         self.name = "";
         self.fetchTime = "";
-	self.accepted = 0;
+	self.accepted = 2;
 	self.endDate = None;
 
     def __str__(self):

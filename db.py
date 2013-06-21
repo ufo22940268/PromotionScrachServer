@@ -52,7 +52,7 @@ def createDb():
                 + BankTable.COL_TITLE + " TEXT, " 
                 + BankTable.COL_FETCH_TIME + " TEXT, " 
                 + BankTable.COL_NAME + " TEXT, " 
-                + BankTable.COL_ACCEPTED + " INTEGER DEFAULT 0, " 
+                + BankTable.COL_ACCEPTED + " INTEGER DEFAULT " + str(BankTable.FLAG_POSTPONED) + ", " 
                 + BankTable.COL_URL + " TEXT," 
                 + BankTable.COL_HASH + " INTEGER," 
                 + BankTable.COL_CITY_ID + " INTEGER,"

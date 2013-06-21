@@ -27,8 +27,8 @@ import scratch.nbcb
 import scratch.icbc
 
 TEST_BANKS = {
-        #scratch.cmb,
-        scratch.ecitic,
+        scratch.cmb,
+        #scratch.ecitic,
         #scratch.abc,
         }
 
