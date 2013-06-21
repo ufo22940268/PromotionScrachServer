@@ -55,10 +55,12 @@ class BanksGetter(BaseGetter):
             if href.startswith("http:"): 
                 b.url = href;
             else:
-                b.url = "http://creditcard.cib.com.cn/" + href;
+		b.url = "http://creditcard.cib.com.cn" + href;
 
             title = a.string.strip().encode("utf-8");
 	    b.city = city_parser.parseBracketStyle(title);
+	    if b.city in ["兴悦会", "机票随兴订",]:
+		b.city = None;
 	    b.title = re.sub(r"\[.*?\](.*)", r"\1", title);
             banks.append(b);
         return banks;

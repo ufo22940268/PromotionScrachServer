@@ -6,6 +6,9 @@ scratch-data:
 
 scratch-test-data:
 	python main.py test
+
+update-test-data:
+	python main.py update-test
 save:
 	echo "success!"
 
@@ -13,16 +16,16 @@ db:
 	python db.py
 
 print-db:
-	sqlite3 content.db "select * from bank"
+	sqlite3 test_content.db "select * from bank"
 
 print-city:
-	sqlite3 content.db "select * from city"
+	sqlite3 test_content.db "select * from city"
 
 clear-db:
-	sqlite3 content.db "delete from bank"
+	sqlite3 test_content.db "delete from bank"
 
 print-name:
-	sqlite3 content.db "select * from name"
+	sqlite3 test_content.db "select * from name"
 
 create-db:
 	python db.py create-db
@@ -34,4 +37,4 @@ test:
 unit-test:
 	python unit_test.py
 
-.DEFAULT_GOAL := test
+.DEFAULT_GOAL := scratch-test-data

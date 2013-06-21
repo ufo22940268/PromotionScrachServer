@@ -20,7 +20,7 @@ class BanksGetter(BaseGetter):
 
     def getBanksByUrl(self, url):
         banks = [];
-        soup = self.getSoup(url);
+        soup = self.getSoup(url, encoding="gbk");
         if not soup:
             return banks;
 
@@ -28,7 +28,11 @@ class BanksGetter(BaseGetter):
         for l in lis:
             b = Bank();
             b.url = "http://www.spdbccc.com.cn" + l["href"].encode("utf-8"); 
-            b.title = l.string.encode("utf-8");
+            title = l.string.encode("utf-8");
+	    b.title = re.sub(r"\[.*\](.*)", r"\1", title);
+	    m = re.match(r"\[(.*)地区\]", title);
+	    if m:
+		b.city = m.group(1);
             banks.append(b);
 
         return banks;

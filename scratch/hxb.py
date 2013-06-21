@@ -27,7 +27,7 @@ class BanksGetter(BaseGetter):
 		for l in lis:
 		    b = Bank();
 		    a = l.find("a");
-		    b.url = "http://creditcard.hxb.com.cn" + a["href"].encode("utf-8");
+		    b.url = "http://creditcard.hxb.com.cn/hotnews/" + a["href"].encode("utf-8");
 		    b.title = a["title"].encode("utf-8").strip();
 		    h6 = l.find("h6").string;
                     if h6 != None:

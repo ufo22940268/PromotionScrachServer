@@ -94,6 +94,41 @@ def insertBank(bank):
     c.close();
     return True;
 
+def removeBank(bank):
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("delete from %s where %s = ?" % (BankTable.TABLE_NAME, BankTable.COL_HASH) ,(bank.hashcode(),));
+    conn.commit();
+    c.close();
+    
+
+def updateBank(bank):
+    conn = getConnection();
+    c = conn.cursor();
+
+    if bank.isExpired():
+        removeBank(bank);
+        return;
+
+    if not hasInDb(bank.hashCode()):
+        insertBank(bank);
+    else:
+        now = datetime.now().strftime('%Y-%m-%d');
+        cityId = getCityId(bank.city);
+        print "update:", bank;
+        c.execute("UPDATE " + BankTable.TABLE_NAME + " SET " 
+                + BankTable.COL_TITLE + " = ?," 
+                + BankTable.COL_FETCH_TIME  + " = ?," 
+                + BankTable.COL_NAME + " = ?," 
+                + BankTable.COL_URL + " = ?," 
+                + BankTable.COL_CITY_ID + " = ?" +
+                " where " + BankTable.COL_HASH + " = ?",
+                (bank.title.decode("utf-8"), now, bank.name.decode("utf-8"), bank.url.decode("utf-8"), cityId, bank.hashCode()));
+        conn.commit();
+
+    c.close();
+    return True;
+
 def hasInDb(hashCode):
     conn = getConnection();
     c = conn.cursor();
@@ -139,6 +174,15 @@ def buildWhereClause(d):
         if i != len(keys) - 1:
             where += "and ";
     return where;
+
+def hasBankName(name):
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("select * from %s where %s = ?" % (NameTable.TABLE_NAME, NameTable.COL_NAME), (name.decode("utf-8"),));
+    cnt = len(c.fetchall());
+    conn.commit();
+    c.close();
+    return cnt != 0;
     
 
 def getBankList(whereDict, city="all"):
@@ -148,8 +192,10 @@ def getBankList(whereDict, city="all"):
     if city and city != "all":
 	where += " and ct_name = '%s'" % city;
 
-    c.execute("select * from " + BankTable.TABLE_NAME 
-	    + " left join " + " (select _id as ct_id, name as ct_name from city) "  + "  on ct_id == _id "
+    c.execute("SELECT * FROM " + BankTable.TABLE_NAME 
+	    + " LEFT OUTER JOIN " 
+            + " (SELECT _id AS ct_id, name AS ct_name FROM city) "  
+            + " ON ct_id == " + BankTable.COL_CITY_ID + " "
 	    + where, list(whereDict.viewvalues()));
 
     conn.commit();

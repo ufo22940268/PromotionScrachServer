@@ -20,7 +20,7 @@ class Bank():
         return "url:" + self.url + "\ntitle:" + self.title + "\nendDate:" + str(self.endDate) + "\ncity:" + str(self.city) + "\n\n";
 
     def hashCode(self):
-        urlAndTitle = self.url + self.title;
+        urlAndTitle = self.url + self.title + str(self.city);
         m = hashlib.md5();
         m.update(urlAndTitle);
         return m.hexdigest();

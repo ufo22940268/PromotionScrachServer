@@ -25,6 +25,7 @@ from scratch import nbcb
 from scratch import hxb
 from scratch import icbc
 from scratch import boc
+from scratch import wenzhou
 
 banks = [cmb,]
 

@@ -21,12 +21,12 @@ class BaseGetter:
 	else:
 	    return f;
 
-    def getSoup(self, url):
+    def getSoup(self, url, encoding="utf-8"):
        f = self.openUrl(url); 
        if f == None:
            return None;
        else:
-           return BeautifulSoup(f);
+           return BeautifulSoup(f, from_encoding=encoding);
     
     def getName(self):
         """docstring for getName"""

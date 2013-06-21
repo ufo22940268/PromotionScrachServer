@@ -50,7 +50,8 @@ ALL_BANKS = [
         ]
 
 TEST_BANKS = {
-        scratch.hxb,
+        #scratch.cmb,
+        scratch.icbc,
         #scratch.abc,
         }
 
@@ -71,10 +72,27 @@ def fetchProms(bankEntities):
             print traceback.print_exc();
             print "bank %s error" % (name,);
 
+def updateProms(bankEntities):
+    for bankEntity in bankEntities:
+        getter = bankEntity.BanksGetter();
+        name = getter.getName();
+        try: 
+            banks = getter.fetchBankList();
+            if not db.hasBankName(name):
+                print "%s bank not found" % name;
+                break;
+
+            for b in banks:
+                b.name = name;
+                db.updateBank(b);
+        except:
+            print traceback.print_exc();
+            print "bank %s error" % (name,);
+
 def help():
     print '''
             ussage:
-                python main.py [normal|test]'''
+                python main.py [normal|test|update-test]'''
 
 
 if __name__ == '__main__':
@@ -85,7 +103,10 @@ if __name__ == '__main__':
     if sys.argv[1] == "normal":
         fetchProms(ALL_BANKS);
     elif sys.argv[1] == "test": 
+        db.createDb();
         fetchProms(TEST_BANKS);
+    elif sys.argv[1] == "update-test": 
+        updateProms(TEST_BANKS);
     else:
         help();
         exit(-1);

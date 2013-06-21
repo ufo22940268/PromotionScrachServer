@@ -40,8 +40,10 @@ class BanksGetter(BaseGetter):
                     b.url = u;
                     
                     #remove city info.
-                    text = self.removeCity(text);
-
+		    m = re.match(r"(.*)--", text);
+		    if m:
+			b.city = m.group(1);
+		    text = self.removeCity(text);
                     b.title = text;
                     banks.append(b);
                 else:
@@ -57,7 +59,8 @@ class BanksGetter(BaseGetter):
         for a in soup.find("table", class_="ke-zeroborder").find_all("a"):
             b = Bank();
             b.url = a["href"].encode("utf-8");
-            b.title = self.removeCity(a.string.encode("utf-8"));
+	    title = a.string.encode("utf-8");
+            b.title = self.removeCity(title);
             banks.append(b);
         return banks;
 

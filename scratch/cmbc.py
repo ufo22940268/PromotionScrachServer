@@ -9,30 +9,30 @@ import util
 import re
 
 class BanksGetter(BaseGetter):
+
+    def __init__(self):
+	self.prevSoup = None;
+
     def getName(self):
         return "民生银行";
 
     def fetchBankList(self):
-        banks = [];
-        for page in range(1, self.getPageRange()): 
-            print "http://creditcard.cmbc.com.cn/Ex-gratiaBusiness/ResultList.aspx?page=" + str(page);
-            f = self.openUrl("http://creditcard.cmbc.com.cn/Ex-gratiaBusiness/ResultList.aspx?page=" + str(page));
+	banks = [];
+	baseUrl = "http://creditcard.cmbc.com.cn/promotioninfo/PromotionInfoList.aspx?page=%d";
+	for page in range(1, self.getPageRange()):
+	    url = baseUrl % page;
+	    soup = self.getSoup(url, encoding="gbk"); 
 
-            if f == None:
-                break;
+	    if not soup or(self.prevSoup and soup.get_text() == self.prevSoup.get_text()):
+		break;
 
-	    soup = BeautifulSoup(f);
-	    lis = soup.find_all("li", class_="nameSh");
-	    for l in lis:
+	    self.prevSoup = soup;
+	    for l in soup.find_all("li", class_="lb_white"):
+		a = l.find("a");
 		b = Bank();
-                b.url = "http://creditcard.cmbc.com.cn/Ex-gratiaBusiness/" + l.find("a")["href"].encode("utf-8");
-		b.title = self.getTitleByUrl(b.url);
-
+		b.title = a["title"].encode("utf-8");
+		b.url = "http://creditcard.cmbc.com.cn/promotioninfo/" + a["href"].encode("utf-8");
+		b.city = a.next_sibling.string.encode("utf-8");
 		banks.append(b);
+
 	return banks;
-
-    def getTitleByUrl(self, url):
-        f = self.openUrl(url);
-        soup = BeautifulSoup(f, from_encoding="gbk");
-        return soup.find(style=re.compile(r"color:#ff0000;")).string.encode("utf-8");
-

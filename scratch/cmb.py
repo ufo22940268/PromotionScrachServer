@@ -15,8 +15,10 @@ class BanksGetter(BaseGetter):
     def fetchBankList(self):
         banks = [];
         cities = self.getCities();
-        for city in cities:
-            url = "http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=%s&type=specialsale" % (city)
+        for dic in cities:
+            cityId = dic["id"];    
+            cityName = dic["name"];
+            url = "http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=%s&type=specialsale" % (cityId)
 	    f = self.openUrl(url);
             if f == None:
                 break;
@@ -34,6 +36,7 @@ class BanksGetter(BaseGetter):
             blJo = json.loads(new)["list"];
             for bJo in blJo:
                 b = self.inflateBank(bJo);
+                b.city = cityName;
                 banks.append(b);
         return banks;
 
@@ -52,8 +55,13 @@ class BanksGetter(BaseGetter):
 
     def getCities(self):
         cities = [];
-        soup = self.getSoup("http://cc.cmbchina.com/Promotion/");
+        #soup = self.getSoup("http://cc.cmbchina.com/Promotion/");
+        soup = BeautifulSoup(open("cmb").read());
         for a in soup.find_all("a", href=re.compile(r'javascript:GetList')):
             href = a["href"];
-            cities.append(re.match(".*\('(\w+)'.*'(\w+)'.*", href).group(2).encode("utf-8"));
+            m = re.match(".*\('\w+'.*'(\w+)'.*'(.*)'", href);
+            if m:
+                id = m.group(1).encode("utf-8");
+                name = m.group(2).encode("utf-8");
+                cities.append(dict(id=id, name=name));
         return cities;
