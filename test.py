@@ -27,7 +27,7 @@ from scratch import icbc
 from scratch import boc
 from scratch import wenzhou
 
-banks = [cmb,]
+banks = [wenzhou,]
 
 for bank in banks:
     bl = bank.BanksGetter().fetchBankList();

@@ -41,4 +41,4 @@ test:
 unit-test:
 	python unit_test.py
 
-.DEFAULT_GOAL := scratch-test-data
+.DEFAULT_GOAL := test

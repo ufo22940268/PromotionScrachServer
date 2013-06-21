@@ -41,13 +41,14 @@ class BanksGetter(BaseGetter):
 	return banks;
 
     def parseDate(self, url):
-        pass
-        #soup = self.getSoup(url);
-        #if not soup:
-            #return;
+	soup = self.getSoup(url);
+	if not soup:
+	    return;
 
-         #for s in soup.stripped_strings;
-        #m = re.match(".*至(.*日)", page);
-        #if m:
-            #return m.group(1);
-        
+	print "get_text", soup.get_text().encode("utf-8");
+	test = "asdfasdfji至12月2日dfajisdfjiajdf";
+	m = re.match(r".*(活动时间)", test);
+	if m:
+	    print m.group(1);
+	    return m.group(1);
+	
