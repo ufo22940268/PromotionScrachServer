@@ -16,12 +16,6 @@ class BanksGetter(BaseGetter):
         return "温州银行";
 
     def fetchBankList(self):
-
-        #test
-        print self.parseDate("http://www.wzbank.cn/credit/newsview/menu_item_id/268/page_id/375"); 
-        return;
-        #test
-        
         banks = [];
         baseUrl = "http://www.wzbank.cn/credit/newslist/menu_item_id/268/page/%d";
 
@@ -40,6 +34,7 @@ class BanksGetter(BaseGetter):
 
 	return banks;
 
+    #TODO Not function well.
     def parseDate(self, url):
 	soup = self.getSoup(url);
 	if not soup:

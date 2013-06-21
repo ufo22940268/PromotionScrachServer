@@ -26,8 +26,12 @@ import scratch.pingan
 import scratch.nbcb
 import scratch.icbc
 
+#Section 3.
+import scratch.wenzhou
+import scratch.guangzhou
+
 TEST_BANKS = {
-        scratch.cmb,
+        scratch.guangzhou,
         #scratch.ecitic,
         #scratch.abc,
         }
