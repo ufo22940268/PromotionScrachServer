@@ -9,6 +9,10 @@ scratch-test-data:
 
 update-test-data:
 	python main.py update-test
+
+replace-specific-data:
+	python main.py replace-specific
+
 save:
 	echo "success!"
 

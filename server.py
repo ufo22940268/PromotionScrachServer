@@ -88,9 +88,9 @@ class TableHandler(tornado.web.RequestHandler):
         page = dict();
         page["text"] = str(p);
         if p == 1 and activePage - 1 > 3:
-            page["text"] = "... " + page["text"];
+            page["text"] =  page["text"] + " ...";
         elif p == pageCount and pageCount - activePage > 3: 
-            page["text"] = page["text"] + " ...";
+            page["text"] = " ..." + page["text"];
         page["value"] = p;
         page["isActive"] = p == activePage;
         return page;

@@ -28,8 +28,12 @@ import scratch.icbc
 
 TEST_BANKS = {
         #scratch.cmb,
-        scratch.ceb,
+        scratch.ecitic,
         #scratch.abc,
+        }
+
+SPECIFIC_BANKS = {
+        scratch.ecitic,
         }
 
 
@@ -90,6 +94,32 @@ def updateProms(bankEntities):
             print traceback.print_exc();
             print "bank %s error" % (name,);
 
+def replaceProms(bankEntities):
+    for entity in bankEntities:
+        getter = entity.BanksGetter();
+        name = getter.getName();
+        db.removeBankByName(name);
+
+    fetchProms(bankEntities);
+
+def processProms(bankEntities, handle):
+    for bankEntity in bankEntities:
+        getter = bankEntity.BanksGetter();
+        name = getter.getName();
+        try: 
+            banks = getter.fetchBankList();
+            if not db.hasBankName(name):
+                print "%s bank not found" % name;
+                break;
+
+            for b in banks:
+                b.name = name;
+                handle(b);
+        except:
+            print traceback.print_exc();
+            print "bank %s error" % (name,);
+
+
 def help():
     print '''
             ussage:
@@ -108,6 +138,8 @@ if __name__ == '__main__':
         fetchProms(TEST_BANKS);
     elif sys.argv[1] == "update-test": 
         updateProms(TEST_BANKS);
+    elif sys.argv[1] == "replace-specific": 
+        replaceProms(SPECIFIC_BANKS);
     else:
         help();
         exit(-1);

@@ -100,6 +100,14 @@ def removeBank(bank):
     c.execute("delete from %s where %s = ?" % (BankTable.TABLE_NAME, BankTable.COL_HASH) ,(bank.hashcode(),));
     conn.commit();
     c.close();
+
+def removeBankByName(name):
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("delete from " + BankTable.TABLE_NAME
+            + " where " + BankTable.COL_NAME + " = ?", (name.decode("utf-8"),));
+    conn.commit();
+    c.close();
     
 
 def updateBank(bank):

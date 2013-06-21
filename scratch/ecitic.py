@@ -21,7 +21,11 @@ class BanksGetter(BaseGetter):
         for li in lis:
             b = Bank();
             h2 = li.find_all("h2")[0];
-            b.title = h2.string.encode("utf-8");
+            title = h2.string.encode("utf-8");
+            b.title = re.sub(r"\[.*\]", "", title);
+            m = re.match(r".*\[(.*)\].*", title);
+            if m:
+                b.city = m.group(1);
             b.name = self.getName();
             b.url = "http://cards.ecitic.com/youhui/" +li.find("a", class_="a-h")["href"].encode("utf-8");
             ds = li.find("span", class_="date")
