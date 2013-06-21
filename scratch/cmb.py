@@ -18,6 +18,9 @@ class BanksGetter(BaseGetter):
         for city in cities:
             url = "http://cc.cmbchina.com/SvrAjax/PromotionChange.ashx?city=%s&type=specialsale" % (city)
 	    f = self.openUrl(url);
+            if f == None:
+                break;
+
             raw = f.readlines();
             strs = raw[:];
             if strs != None:

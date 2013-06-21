@@ -26,10 +26,10 @@ from scratch import hxb
 from scratch import icbc
 from scratch import boc
 
-banks = [pingan,]
+banks = [cmb,]
 
 for bank in banks:
     bl = bank.BanksGetter().fetchBankList();
-    #if bl != None:
-	#for b in bl:
-	    #print b
+    if bl != None:
+        for b in bl:
+            print b
