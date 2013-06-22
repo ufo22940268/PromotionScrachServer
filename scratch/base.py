@@ -47,3 +47,6 @@ class BaseGetter:
 	    return settings.TEST_PAGE_COUNT;
 	else:
 	    return settings.MAX_PAGE_COUNT;
+
+    def isSoupEquals(self, s1, s2):
+        return s1 and s2 and s1.get_text() == s2.get_text();
