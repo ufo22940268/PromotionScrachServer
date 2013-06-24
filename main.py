@@ -34,9 +34,11 @@ import scratch.hangzhou
 import scratch.srcb
 
 TEST_BANKS = {
-        scratch.srcb,
-        #scratch.ecitic,
-        #scratch.abc,
+        #scratch.wenzhou,
+        #scratch.guangzhou,
+        #scratch.shanghai,
+        #scratch.hangzhou,
+        #scratch.srcb,
         }
 
 SPECIFIC_BANKS = {
@@ -64,6 +66,16 @@ ALL_BANKS = [
         scratch.pingan,
         scratch.nbcb,
         scratch.icbc,
+
+        #----------3----------
+        scratch.wenzhou,
+        scratch.guangzhou,
+
+        #Link invalidated.
+        #scratch.shanghai,
+
+        scratch.hangzhou,
+        scratch.srcb,
         ]
 
 
