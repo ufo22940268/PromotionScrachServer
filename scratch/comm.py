@@ -25,7 +25,7 @@ class BanksGetter(BaseGetter):
             lis = soup.find_all("div", class_="wzms");
             for l in lis:
                 b = Bank();
-                b.url = l.find("img")["src"].encode("utf-8");
+                b.url = "http://creditcard.bankcomm.com" + l.next_sibling.next_sibling.find("a", class_="btnMore")["href"].encode("utf-8");
                 b.title = l.find("td", class_="t2").string.encode("utf-8").strip();
                 b.endDate = date_parser.parseZhiStyle(l.find("td", class_="t4").string.encode("utf-8").strip());
                 banks.append(b);
