@@ -38,7 +38,7 @@ TEST_BANKS = {
         #scratch.guangzhou,
         #scratch.shanghai,
         #scratch.hangzhou,
-        scratch.comm,
+        scratch.psbc,
         }
 
 SPECIFIC_BANKS = {

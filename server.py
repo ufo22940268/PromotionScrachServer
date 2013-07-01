@@ -10,6 +10,7 @@ import sys
 from util import log
 import util
 import settings
+import ignore_me
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -125,7 +126,7 @@ class UpdateItemStatesHandler(tornado.web.RequestHandler):
         db.updateItemStates(ids, acFlag);
 
 application = tornado.web.Application([
-    (r"/promotion_filter", MainHandler),
+    (ignore_me.HOST_URL, MainHandler),
     (r"/assets/css/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/css/"}),
     (r"/assets/js/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/js/"}),
     (r"/assets/img/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/img/"}),
