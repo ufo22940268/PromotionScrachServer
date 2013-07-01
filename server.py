@@ -137,5 +137,5 @@ application = tornado.web.Application([
     ]);
 
 if __name__ == "__main__":
-    application.listen(8888)
+    application.listen(ignore_me.HOST_PORT)
     tornado.ioloop.IOLoop.instance().start()

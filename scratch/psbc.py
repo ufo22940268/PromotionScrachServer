@@ -27,7 +27,7 @@ class BanksGetter(BaseGetter):
             for a in soup.find("ul", class_="artic_list clearfix").find_all("a"):
                 b = Bank();
                 url =  a["href"].encode("utf-8");
-                if re.match(r"http:", url):
+                if re.match(r"http", url):
                     b.url = url; 
                 else:
                     b.url = "http://www.psbc.com" + url;
