@@ -125,7 +125,7 @@ class UpdateItemStatesHandler(tornado.web.RequestHandler):
         db.updateItemStates(ids, acFlag);
 
 application = tornado.web.Application([
-    (r"/", MainHandler),
+    (r"/promotion_filter", MainHandler),
     (r"/assets/css/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/css/"}),
     (r"/assets/js/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/js/"}),
     (r"/assets/img/(.*)", tornado.web.StaticFileHandler, {"path": "./assets/img/"}),
