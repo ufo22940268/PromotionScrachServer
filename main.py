@@ -38,7 +38,7 @@ TEST_BANKS = {
         #scratch.guangzhou,
         #scratch.shanghai,
         #scratch.hangzhou,
-        scratch.srcb,
+        scratch.ecitic,
         }
 
 SPECIFIC_BANKS = {
@@ -88,10 +88,13 @@ def fetchProms(bankEntities):
         name = getter.getName();
         try: 
             banks = getter.fetchBankList();
-            db.insertBankName(name);
-            for b in banks:
-                b.name = name;
-                db.insertBank(b);
+            if banks:
+                db.insertBankName(name);
+                for b in banks:
+                    b.name = name;
+                    db.insertBank(b);
+            else:
+                print "bank %s is None" % name;
         except:
             print traceback.print_exc();
             print "bank %s error" % (name,);

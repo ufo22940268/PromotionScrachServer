@@ -14,13 +14,13 @@ import ignore_me
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-	loader = Loader("./");
-	bl = db.getAvailableBanks();
-	self.write(loader.load("index.html").generate(availableBanks=bl));
+        loader = Loader("./");
+        bl = db.getAvailableBanks();
+        self.write(loader.load("index.html").generate(availableBanks=bl));
 
 class TableHandler(tornado.web.RequestHandler):
     def get(self):
-	loader = Loader("./");
+        loader = Loader("./");
         bankName = self.get_argument("bank_name");
         state = self.get_argument("state");
         page = int(self.get_argument("page", "1"));
@@ -40,10 +40,10 @@ class TableHandler(tornado.web.RequestHandler):
             whereDict[BankTable.COL_ACCEPTED] = BankTable.FLAG_POSTPONED;
 
         allBanks = db.getBankList(whereDict, city);
-	if self.get_argument("isOption", "false") == "true":
-	    cities = self.extractCities(db.getBankList(whereDict));
-	    self.write(loader.load("option.html").generate(activedCity=city, cities=cities));
-	    return;
+        if self.get_argument("isOption", "false") == "true":
+            cities = self.extractCities(db.getBankList(whereDict));
+            self.write(loader.load("option.html").generate(activedCity=city, cities=cities));
+            return;
 
         banks = allBanks[(page - 1)*settings.PAGE_COUNT: page*settings.PAGE_COUNT];
         pageCount = len(allBanks)/settings.PAGE_COUNT;
@@ -51,7 +51,7 @@ class TableHandler(tornado.web.RequestHandler):
             pageCount += 1;
         
         pages = self.buildPages(page, pageCount);
-	self.write(loader.load("table.html").generate(banks=banks, pages=pages, activePage=page, pageCount=pageCount));
+        self.write(loader.load("table.html").generate(banks=banks, pages=pages, activePage=page, pageCount=pageCount));
 
     def buildPages(self, activePage, pageCount):
         pages = [];
@@ -97,11 +97,11 @@ class TableHandler(tornado.web.RequestHandler):
         return page;
 
     def extractCities(self, banks):
-	cities = set();
-	for b in banks:
-	    if b.city:
-		cities.add(b.city);
-	return cities;
+        cities = set();
+        for b in banks:
+            if b.city:
+                cities.add(b.city);
+        return cities;
 
 
 class CheckHandler(tornado.web.RequestHandler):

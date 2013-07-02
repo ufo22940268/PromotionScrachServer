@@ -67,7 +67,7 @@ def createDb():
 
     c.execute("DROP TABLE IF EXISTS %s" % CityTable.TABLE_NAME);
     c.execute("CREATE TABLE %(table)s(%(id)s INTEGER PRIMARY KEY AUTOINCREMENT, %(name)s TEXT)" % \
-	    {"table":CityTable.TABLE_NAME, "id":CityTable.COL_ID, "name":CityTable.COL_NAME});
+            {"table":CityTable.TABLE_NAME, "id":CityTable.COL_ID, "name":CityTable.COL_NAME});
 
     conn.commit();
     c.close();
@@ -81,13 +81,13 @@ def insertBank(bank):
     hashCode = bank.hashCode();
     if not hasInDb(hashCode) and not bank.isExpired():
         c.execute("INSERT INTO bank(" 
-		+ BankTable.COL_TITLE + "," 
-		+ BankTable.COL_FETCH_TIME  + "," 
-		+ BankTable.COL_NAME + "," 
-		+ BankTable.COL_URL + "," 
-		+ BankTable.COL_HASH + "," 
-		+ BankTable.COL_CITY_ID + ")" 
-		+ " values(?, ?, ?, ?, ?, ?)",
+                + BankTable.COL_TITLE + "," 
+                + BankTable.COL_FETCH_TIME  + "," 
+                + BankTable.COL_NAME + "," 
+                + BankTable.COL_URL + "," 
+                + BankTable.COL_HASH + "," 
+                + BankTable.COL_CITY_ID + ")" 
+                + " values(?, ?, ?, ?, ?, ?)",
                 (bank.title.decode("utf-8"), now, bank.name.decode("utf-8"), bank.url.decode("utf-8"), hashCode, cityId,));
         conn.commit();
 
@@ -198,29 +198,29 @@ def getBankList(whereDict, city="all"):
     c = conn.cursor();
     where = buildWhereClause(whereDict);
     if city and city != "all":
-	where += " and ct_name = '%s'" % city;
+        where += " and ct_name = '%s'" % city;
 
     c.execute("SELECT * FROM " + BankTable.TABLE_NAME 
-	    + " LEFT OUTER JOIN " 
+            + " LEFT OUTER JOIN " 
             + " (SELECT _id AS ct_id, name AS ct_name FROM city) "  
             + " ON ct_id == " + BankTable.COL_CITY_ID + " "
-	    + where, list(whereDict.viewvalues()));
+            + where + "ORDER BY _id DESC", list(whereDict.viewvalues()))
 
     conn.commit();
 
     banks = [];
     for row in c.fetchall():
-	bank = Bank();
-	bank.name = row[BankTable.COL_NAME];
-	bank.title = row[BankTable.COL_TITLE];
-	bank.fetchTime = row[BankTable.COL_FETCH_TIME];
-	bank.accepted = row[BankTable.COL_ACCEPTED];
-	bank.url = row[BankTable.COL_URL];
+        bank = Bank();
+        bank.name = row[BankTable.COL_NAME];
+        bank.title = row[BankTable.COL_TITLE];
+        bank.fetchTime = row[BankTable.COL_FETCH_TIME];
+        bank.accepted = row[BankTable.COL_ACCEPTED];
+        bank.url = row[BankTable.COL_URL];
         bank.id = row[BankTable.COL_ID];
-	city = row["ct_name"];
-	if city:
-	    bank.city = city;
-	banks.append(bank);
+        city = row["ct_name"];
+        if city:
+            bank.city = city;
+        banks.append(bank);
     return banks;
 
 def getAvailableBanks():
@@ -253,7 +253,7 @@ def updateItemStates(ids, acFlag):
 
 def getCityId(name):
     if not name:
-	return CityTable.DEFAULT_ID;
+        return CityTable.DEFAULT_ID;
 
     conn = getConnection();
     c = conn.cursor();
@@ -262,9 +262,9 @@ def getCityId(name):
     rows = c.fetchall();
     id = None;
     if len(rows) > 0:
-	id = rows[0][CityTable.COL_ID];
+        id = rows[0][CityTable.COL_ID];
     else:
-	id = insertNewCity(name);
+        id = insertNewCity(name);
     return id;
 
 def insertNewCity(city):
