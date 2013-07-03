@@ -38,7 +38,8 @@ TEST_BANKS = {
         #scratch.guangzhou,
         #scratch.shanghai,
         #scratch.hangzhou,
-        scratch.ecitic,
+        scratch.cmbc,
+        #scratch.cib,
         }
 
 SPECIFIC_BANKS = {
@@ -156,7 +157,7 @@ if __name__ == '__main__':
     if sys.argv[1] == "normal":
         fetchProms(ALL_BANKS);
     elif sys.argv[1] == "test": 
-        db.createDb();
+        #db.createDb();
         fetchProms(TEST_BANKS);
     elif sys.argv[1] == "update-test": 
         updateProms(TEST_BANKS);
