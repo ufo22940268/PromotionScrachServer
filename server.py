@@ -37,7 +37,7 @@ class TableHandler(tornado.web.RequestHandler):
         elif state == "unaccepted":
             whereDict[BankTable.COL_ACCEPTED] = BankTable.FLAG_UNACCEPTED;
         else:
-            whereDict[BankTable.COL_ACCEPTED] = BankTable.FLAG_POSTPONED;
+            raise Exception("postponed option has deprecated!");
 
         allBanks = db.getBankList(whereDict, city);
         if self.get_argument("isOption", "false") == "true":
