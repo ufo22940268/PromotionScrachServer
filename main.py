@@ -145,7 +145,7 @@ def processProms(bankEntities, handle):
 
 def help():
     print '''
-            ussage:
+            usage:
                 python main.py [normal|test|update-test]'''
 
 
@@ -157,7 +157,9 @@ if __name__ == '__main__':
     if sys.argv[1] == "normal":
         fetchProms(ALL_BANKS);
     elif sys.argv[1] == "test": 
-        #db.createDb();
+        fetchProms(TEST_BANKS);
+    elif sys.argv[1] == "clear-test":
+        db.createDb();
         fetchProms(TEST_BANKS);
     elif sys.argv[1] == "update-test": 
         updateProms(TEST_BANKS);

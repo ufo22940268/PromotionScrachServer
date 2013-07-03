@@ -7,6 +7,9 @@ scratch-data:
 scratch-test-data:
 	python main.py test
 
+clear-then-scratch-test-data:
+	python main.py clear-test
+
 update-test-data:
 	python main.py update-test
 

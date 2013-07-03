@@ -27,18 +27,18 @@
         <th>操作</th>
     </tr>
     {% for i, bank in enumerate(banks) %}
-    <tr data-id="{{ bank.id }}">
+    {% from datetime import date %}
+    <tr data-id="{{ bank.id }}" {% if bank.fetchTime == date.today().strftime("%Y-%m-%d") %}class="info"{% end %} )>
         <td><input class="row-selector" type="checkbox" id="checkbox_{{ i }}" data-id="{{ bank.id }}" onclick="checkItem(this)"/></td>
         <td onclick="checkRow($(this).parent())" style="width:60px">{{ bank.name }}</td>
         <td><a class="btn" href="{{ bank.url }}" target="_blank"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
-	<td style="width:320px">{{ bank.title }}</td>
+        <td style="width:320px">{{ bank.title }}</td>
         <td style="width:60px">{{ bank.city }}</td>
         <td>{{ bank.fetchTime }}</td>
         <td>
             <div class="btn-group" data-toggle="buttons-radio" style="float:left;" data-id="{{ bank.id }}">
                 <button type="button" class="btn btn-success {% if bank.accepted == 1 %} {{ 'active' }} {% end %}" onclick="acceptProm(this)" >采用</button>
                 <button type="button" class="btn btn-success {% if bank.accepted == 0 %} {{ 'active' }} {% end %}" onclick="unacceptProm(this)">弃用</button>
-                <button type="button" class="btn btn-success {% if bank.accepted == 2 %} {{ 'active' }} {% end %}" onclick="postponeProm(this)">待处理</button>
             </div>
             <img src="assets/img/tiny_loading.gif" alt="" style="margin-left:10px;visibility:hidden;"/>
         </td>
