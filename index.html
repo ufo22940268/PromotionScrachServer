@@ -28,7 +28,7 @@
                     <select id="opt-bank" name="" class="opt-selector" onchange="loadContent()">
                         <!--<option value="all">所有</option>-->
                         {% for bank in availableBanks %}
-                        <option value="{{ bank['name'] }}">{{ bank['name'] }} {% if bank['today'] %}*{% end %} </option>
+                        <option value="{{ bank['name'] }}">{{ bank['name'] }} {% if bank['today'] %}&#x21A9;{% end %} </option>
                         {% end %}
                     </select>
 
