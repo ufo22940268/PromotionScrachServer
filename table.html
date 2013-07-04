@@ -1,12 +1,11 @@
-<div class="span3 batch-buttons">
+<div class="span5 batch-buttons">
     <button id="opt-btn-select-all" class="btn" href="javascript:;" style="position:inline" onclick="$('.row-selector').prop('checked', true);updateSelectionState();" >选择全部</button>
     <button id="opt-btn-unselect-all" class="btn" href="javascript:;" style="position:inline" onclick="$('.row-selector').prop('checked', false);updateSelectionState();">取消全部</button>
-</div>
-<div class="span4 batch-buttons">
-    <div id="select-batch-ops" style="visibility:hidden">
-        <a id="opt-btn-accept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('accept')">批量采用</a>
-        <a id="opt-btn-unaccept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('unaccept')">批量弃用</a>
-        <a id="opt-btn-skip" class="btn" href="javascript:;" onclick="saveMutibleItemStates('postpone')">批量废弃</a>
+
+    <div id="select-batch-ops" class="btn-group btn-toolbar" style="visibility:hidden; display:inline">
+        <a id="opt-btn-accept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('accept')">采用</a>
+        <a id="opt-btn-unaccept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('unaccept')">弃用</a>
+        <a id="opt-btn-skip" class="btn" href="javascript:;" onclick="saveMutibleItemStates('postpone')">废弃</a>
     </div>
     <img id="opt-loading" src="assets/img/tiny_loading.gif" style="margin-left:10px;visibility:hidden;"/>
 </div>

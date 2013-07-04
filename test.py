@@ -27,10 +27,12 @@ from scratch import icbc
 from scratch import boc
 from scratch import wenzhou
 
-banks = [wenzhou,]
+#banks = [wenzhou,]
 
-for bank in banks:
-    bl = bank.BanksGetter().fetchBankList();
-    if bl != None:
-        for b in bl:
-            print b
+#for bank in banks:
+    #bl = bank.BanksGetter().fetchBankList();
+    #if bl != None:
+        #for b in bl:
+            #print b
+for t in db.getAvailableBanksWithMark():
+    print t["name"].encode("utf-8"), t["today"];

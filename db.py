@@ -7,6 +7,7 @@ import settings
 from settings import *
 import util
 from datetime import datetime
+from datetime import date
 
 class BankTable():
     COL_ID = "_id";
@@ -233,6 +234,31 @@ def getAvailableBanks():
     for row in c.fetchall():
         names.append(row[NameTable.COL_NAME]);
     return names;
+
+def getAvailableBanksWithMark():
+    bl = [];
+
+    ns = getAvailableBanks();
+    for n in ns:
+        bd = dict();
+        bd["name"] = n;
+        bd["today"] = hasTodayInfoOfBank(n);
+        bl.append(bd);
+    return bl;
+
+def hasTodayInfoOfBank(n):
+    today = date.today().strftime("%Y-%m-%d");
+    conn = getConnection();
+    c = conn.cursor();
+    c.execute("select * from " + BankTable.TABLE_NAME 
+        + " where " + BankTable.COL_FETCH_TIME + " = ?" 
+        + " and " + BankTable.COL_NAME + " = ?",
+            (today, n,));
+    cnt = len(c.fetchall());
+    conn.commit();
+    c.close();
+    return cnt != 0;
+
 
 def checkProm(id, opFlag):
     conn = getConnection();

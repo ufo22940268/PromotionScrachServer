@@ -15,7 +15,7 @@ import ignore_me
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         loader = Loader("./");
-        bl = db.getAvailableBanks();
+        bl = db.getAvailableBanksWithMark();
         t = util.getFetchedTime();
         self.write(loader.load("index.html").generate(availableBanks=bl, fetchedTime=t));
 
