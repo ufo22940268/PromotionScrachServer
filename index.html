@@ -55,7 +55,7 @@
                 {% from datetime import date %} 
                 抓取时间 
                 {% set ft = date.fromtimestamp(fetchedTime) %}
-                {% if ft == date.today().strftime("%Y-%m-%d") %}
+                {% if ft == date.today() %}
                     今天
                 {% else %}
                     {{ ft }}
