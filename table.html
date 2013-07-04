@@ -1,10 +1,22 @@
-<div class="pagination pagination-right" style="margin:0px 0px 10px 0px;">
+<div class="span3 batch-buttons">
+    <button id="opt-btn-select-all" class="btn" href="javascript:;" style="position:inline" onclick="$('.row-selector').prop('checked', true);updateSelectionState();" >选择全部</button>
+    <button id="opt-btn-unselect-all" class="btn" href="javascript:;" style="position:inline" onclick="$('.row-selector').prop('checked', false);updateSelectionState();">取消全部</button>
+</div>
+<div class="span4 batch-buttons">
+    <div id="select-batch-ops" style="visibility:hidden">
+        <a id="opt-btn-accept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('accept')">批量采用</a>
+        <a id="opt-btn-unaccept" class="btn" href="javascript:;" onclick="saveMutibleItemStates('unaccept')">批量弃用</a>
+        <a id="opt-btn-skip" class="btn" href="javascript:;" onclick="saveMutibleItemStates('postpone')">批量废弃</a>
+    </div>
+    <img id="opt-loading" src="assets/img/tiny_loading.gif" style="margin-left:10px;visibility:hidden;"/>
+</div>
+<div class="pagination pagination-right" style="float:right">
     <ul>
         {% if activePage != 1 %}
         <li><a href="#" onclick="loadContent('{{ activePage - 1 }}')">Prev</a></li>
         {% end %}
 
-        
+
         {% for p in pages %}
         <li class="{% if p['isActive'] %} active {% end %}" onclick="loadContent($(this).attr('value'))" value="{{ p['value'] }}"><a href="#"> {{ p['text'] }}</a></li>
         {% end %}
@@ -16,33 +28,33 @@
     </ul>
 </div>
 <!--<div style="height:380px;">-->
-<table class="table table-hover row-fluid" >
-    <tr>
-        <th></th>
-        <th>银行名称</th>
-        <th>ID</th>
-        <th>标题</th>
-        <th>城市</th>
-        <th>采集时间</th>
-        <th>操作</th>
-    </tr>
-    {% for i, bank in enumerate(banks) %}
-    {% from datetime import date %}
-    <tr data-id="{{ bank.id }}" {% if bank.fetchTime == date.today().strftime("%Y-%m-%d") %}class="info"{% end %} )>
-        <td><input class="row-selector" type="checkbox" id="checkbox_{{ i }}" data-id="{{ bank.id }}" onclick="checkItem(this)"/></td>
-        <td onclick="checkRow($(this).parent())" style="width:60px">{{ bank.name }}</td>
-        <td><a class="btn" href="{{ bank.url }}" target="_blank"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
-        <td style="width:320px">{{ bank.title }}</td>
-        <td style="width:60px">{{ bank.city }}</td>
-        <td>{{ bank.fetchTime }}</td>
-        <td>
-            <div class="btn-group" data-toggle="buttons-radio" style="float:left;" data-id="{{ bank.id }}">
-                <button type="button" class="btn btn-success {% if bank.accepted == 1 %} {{ 'active' }} {% end %}" onclick="acceptProm(this)" >采用</button>
-                <button type="button" class="btn btn-success {% if bank.accepted == 0 %} {{ 'active' }} {% end %}" onclick="unacceptProm(this)">弃用</button>
-            </div>
-            <img src="assets/img/tiny_loading.gif" alt="" style="margin-left:10px;visibility:hidden;"/>
-        </td>
-    </tr>
-    {% end %}
-</table>
-<!--</div>-->
+    <table class="table table-hover row-fluid" >
+        <tr>
+            <th></th>
+            <th>银行名称</th>
+            <th>ID</th>
+            <th>标题</th>
+            <th>城市</th>
+            <th>采集时间</th>
+            <th>操作</th>
+        </tr>
+        {% for i, bank in enumerate(banks) %}
+        {% from datetime import date %}
+        <tr data-id="{{ bank.id }}" {% if bank.fetchTime == date.today().strftime("%Y-%m-%d") %}class="info"{% end %} )>
+            <td><input class="row-selector" type="checkbox" id="checkbox_{{ i }}" data-id="{{ bank.id }}" onclick="checkItem(this)"/></td>
+            <td onclick="checkRow($(this).parent())" style="width:60px">{{ bank.name }}</td>
+            <td><a class="btn" href="{{ bank.url }}" target="_blank"><i class="icon-eye-open" style="margin-right:5px"></i>查看</a></td>
+            <td style="width:320px">{{ bank.title }}</td>
+            <td style="width:60px">{{ bank.city }}</td>
+            <td>{{ bank.fetchTime }}</td>
+            <td>
+                <div class="btn-group" data-toggle="buttons-radio" style="float:left;" data-id="{{ bank.id }}">
+                    <button type="button" class="btn btn-success {% if bank.accepted == 1 %} {{ 'active' }} {% end %}" onclick="acceptProm(this)" >采用</button>
+                    <button type="button" class="btn btn-success {% if bank.accepted == 0 %} {{ 'active' }} {% end %}" onclick="unacceptProm(this)">弃用</button>
+                </div>
+                <img src="assets/img/tiny_loading.gif" alt="" style="margin-left:10px;visibility:hidden;"/>
+            </td>
+        </tr>
+        {% end %}
+    </table>
+    <!--</div>-->

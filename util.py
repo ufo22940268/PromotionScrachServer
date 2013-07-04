@@ -26,3 +26,6 @@ def next_sibling(node, count):
         i += 1;
         if i == count*2:
             return n;
+
+def getFetchedTime():
+    return os.path.getmtime("./content.db");

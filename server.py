@@ -16,7 +16,8 @@ class MainHandler(tornado.web.RequestHandler):
     def get(self):
         loader = Loader("./");
         bl = db.getAvailableBanks();
-        self.write(loader.load("index.html").generate(availableBanks=bl));
+        t = util.getFetchedTime();
+        self.write(loader.load("index.html").generate(availableBanks=bl, fetchedTime=t));
 
 class TableHandler(tornado.web.RequestHandler):
     def get(self):
