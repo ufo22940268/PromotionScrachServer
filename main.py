@@ -33,13 +33,16 @@ import scratch.shanghai
 import scratch.hangzhou
 import scratch.srcb
 
+#Section 4.
+import scratch.cgb
+
 TEST_BANKS = {
         #scratch.wenzhou,
         #scratch.guangzhou,
         #scratch.shanghai,
         #scratch.hangzhou,
-        scratch.cmbc,
         #scratch.cib,
+        scratch.cgb,
         }
 
 SPECIFIC_BANKS = {

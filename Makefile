@@ -46,5 +46,6 @@ unit-test:
 
 #.DEFAULT_GOAL := test
 #.DEFAULT_GOAL := scratch-test-data
+.DEFAULT_GOAL := clear-then-scratch-test-data
 #.DEFAULT_GOAL := replace-specific-data
-.DEFAULT_GOAL := server
+#.DEFAULT_GOAL := server
