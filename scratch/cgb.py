@@ -14,6 +14,7 @@ class BanksGetter(BaseGetter):
         return "广发银行";
 
     def fetchBankList(self):
+
         banks = [];
         baseUrls = ["http://card.cgbchina.com.cn/Channel/11820301?currentChannelPage=%d", "http://card.cgbchina.com.cn/Channel/11820220?currentChannelPage=%d", "http://card.cgbchina.com.cn/Channel/11820139?currentChannelPage=%d"];
         for baseUrl in baseUrls:
